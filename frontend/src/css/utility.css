@@ -6,22 +6,6 @@
   font-family: "Roboto", sans-serif;
 }
 
-.cmx-5 {
-  margin-left: 5%;
-  margin-right: 5%;
-}
-
-.cp-3r {
-  padding: 2rem 2rem 2rem 2rem;
-}
-
-.te {
-  height: 4rem;
-  width: 8rem;
-}
-
 .borderize {
   border: 3px solid red;
 }
-
-/*# sourceMappingURL=utility.css.map */
