@@ -1,5 +1,8 @@
+import axios from 'axios';
+import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { createUseStyles } from 'react-jss';
+import { useNavigate } from 'react-router-dom';
 import { BackgroundStyles, FontStyles, SpacerStyles } from '../../common-component/JSSUtilities';
 
 const RegisterStyles = createUseStyles({
@@ -16,6 +19,10 @@ const RegisterStyles = createUseStyles({
   },
   hyperlink: {
     color: '#7EA2FF',
+    textDecoration: 'underline',
+    textUnderlineOffset: '2px',
+    borderColor: 'transparent',
+    backgroundColor: 'transparent',
   },
   formTextClass: {
     color: 'white',
@@ -35,7 +42,6 @@ const RegisterStyles = createUseStyles({
     },
   },
   formButton: {
-    padding: '0.8rem 2.4rem 0.8rem 2.4rem',
     fontSize: '1.3rem',
     fontFamily: ['Roboto', 'sans-serif'],
   },
@@ -45,35 +51,62 @@ const RegisterStyles = createUseStyles({
 });
 
 export default function RegisterPage() {
+  const navigator = useNavigate();
+
   const registerStyles = RegisterStyles();
   const backgroundStyles = BackgroundStyles();
   const spacerStyles = SpacerStyles();
   const fontStyles = FontStyles();
 
+  const onLoginClick: React.MouseEventHandler = (event) => {
+    event.preventDefault();
+    navigator('/login');
+  };
+
+  const onSubmitClick: React.MouseEventHandler = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append('name', (document.getElementById('name') as HTMLInputElement).value);
+    formData.append('email', (document.getElementById('email') as HTMLInputElement).value);
+    formData.append('password', (document.getElementById('password') as HTMLInputElement).value);
+    formData.append('password_confirmation', (document.getElementById('password') as HTMLInputElement).value);
+
+    try {
+      await axios.get('/sanctum/csrf-cookie');
+      const response = await axios.post('register', formData);
+      if (response.status === 201) navigator('/app');
+      console.error(response.statusText);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className={`d-flex flex-column align-items-start justify-content-center vh-100 vw-100 ${registerStyles.pageClass} ${backgroundStyles.bgDark}`}>
       <h1 className={`${fontStyles.lato} ${registerStyles.textClass}`}>Create new account</h1>
       <div className={spacerStyles.h4} />
-      <Form className={registerStyles.formClass}>
-        <Form.Group controlId="nameForm">
-          <Form.Label className={`${fontStyles.roboto} ${registerStyles.formTextClass}`}>Name</Form.Label>
-          <Form.Control className={`${registerStyles.formControlClass} ${fontStyles.roboto}`} type="text" placeholder="Joseph Joestar" />
+      <Form id="login-form" className={registerStyles.formClass}>
+        <Form.Group>
+          <Form.Label htmlFor="name" className={`${fontStyles.roboto} ${registerStyles.formTextClass}`}>Name</Form.Label>
+          <Form.Control id="name" name="name" className={`${registerStyles.formControlClass} ${fontStyles.roboto}`} type="text" placeholder="Joseph Joestar" />
         </Form.Group>
         <div className={spacerStyles.h1half} />
-        <Form.Group controlId="emailForm">
-          <Form.Label className={`${fontStyles.roboto} ${registerStyles.formTextClass}`}>Email Address</Form.Label>
-          <Form.Control className={`${registerStyles.formControlClass} ${fontStyles.roboto}`} type="email" placeholder="joseph@mail.com" />
+        <Form.Group>
+          <Form.Label htmlFor="email" className={`${fontStyles.roboto} ${registerStyles.formTextClass}`}>Email Address</Form.Label>
+          <Form.Control id="email" name="email" className={`${registerStyles.formControlClass} ${fontStyles.roboto}`} type="email" placeholder="joseph@mail.com" />
         </Form.Group>
         <div className={spacerStyles.h1half} />
-        <Form.Group controlId="passwordForm">
-          <Form.Label className={`${fontStyles.roboto} ${registerStyles.formTextClass}`}>Password</Form.Label>
-          <Form.Control className={`${registerStyles.formControlClass} ${fontStyles.roboto}`} type="password" placeholder="••••••••" />
+        <Form.Group>
+          <Form.Label htmlFor="password" className={`${fontStyles.roboto} ${registerStyles.formTextClass}`}>Password</Form.Label>
+          <Form.Control id="password" name="password" className={`${registerStyles.formControlClass} ${fontStyles.roboto}`} type="password" placeholder="••••••••" />
         </Form.Group>
         <div className={spacerStyles.h2} />
         <Button
           className={registerStyles.formButton}
           variant="light"
           type="button"
+          onClick={onSubmitClick}
         >
           Create account
         </Button>
@@ -82,7 +115,14 @@ export default function RegisterPage() {
       <p className={registerStyles.bottomTextClass}>
         Already have an account?
         {' '}
-        <a href="#" className={registerStyles.hyperlink}>Login here</a>
+        <button
+          className={registerStyles.hyperlink}
+          type="button"
+          onClick={onLoginClick}
+        >
+          Login here
+          {' '}
+        </button>
       </p>
     </div>
   );
