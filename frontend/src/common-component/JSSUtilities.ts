@@ -1,6 +1,12 @@
 import { createUseStyles } from 'react-jss';
 
 export const SpacerStyles = createUseStyles({
+  h1: {
+    height: '1rem',
+  },
+  h1half: {
+    height: '1.5rem',
+  },
   h2: {
     height: '2rem',
   },
