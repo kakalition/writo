@@ -62,6 +62,7 @@ export const FormStyles = createUseStyles({
     },
   },
   formButton: {
+    padding: '0.8rem 2rem 0.8rem 2rem',
     fontSize: '1.3rem',
     fontFamily: ['Roboto', 'sans-serif'],
   },
