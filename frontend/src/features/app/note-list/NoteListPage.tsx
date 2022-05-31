@@ -1,4 +1,4 @@
-import { Form, FormGroup } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { createUseStyles } from 'react-jss';
 import GridIcon from '../../../common-component/icons/GridIcon';
 import PlusIcon from '../../../common-component/icons/PlusIcon';
@@ -6,6 +6,28 @@ import SearchIcon from '../../../common-component/icons/SearchIcon';
 import TagIcon from '../../../common-component/icons/TagIcon';
 import UserIcon from '../../../common-component/icons/UserIcon';
 import { BackgroundStyles, FontStyles, SpacerStyles } from '../../../common-component/JSSUtilities';
+import { NoteType } from '../typedefs/NoteType';
+
+const dummyData: NoteType[] = [
+  {
+    title: 'Covalent Bonding',
+    body: 'A covalent bond is a chemical bond that involves the sharing of electron pairs between atoms.These electron pairs are known as shared pairs or bonding pairs, and the stable balance of attractive an...',
+    tag: [
+      { name: 'Chemistry', body_color: '#000000', text_color: '#FFFFFF' },
+      { name: 'Project', body_color: '#000000', text_color: '#FFFFFF' },
+    ],
+    timestamp: 1653978464000,
+  },
+  {
+    title: 'Covalent Bonding',
+    body: 'A covalent bond is a chemical bond that involves the sharing of electron pairs between atoms.These electron pairs are known as shared pairs or bonding pairs, and the stable balance of attractive an...',
+    tag: [
+      { name: 'Chemistry', body_color: '#000000', text_color: '#FFFFFF' },
+      { name: 'Test', body_color: '#000000', text_color: '#FFFFFF' },
+    ],
+    timestamp: 1653892064000,
+  },
+];
 
 const NoteListStyles = createUseStyles({
   pageClass: {
@@ -81,7 +103,7 @@ function AppNavbar() {
   );
 }
 
-function SearchBar() {
+function SearchbarComponent() {
   const noteListStyles = NoteListStyles();
   const fontStyles = FontStyles();
   const spacerStyles = SpacerStyles();
@@ -117,7 +139,7 @@ export default function NoteListPage() {
     <div id="page-container" className="d-flex flex-row vh-100 vw-100">
       <AppNavbar />
       <div id="app-content" className="d-flex flex-column w-100 h-100">
-        <SearchBar />
+        <SearchbarComponent />
       </div>
     </div>
   );
