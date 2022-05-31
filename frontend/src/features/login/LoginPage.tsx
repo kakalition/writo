@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import {
   Button, Form,
@@ -18,8 +19,17 @@ export default function LoginPage() {
     navigator('/register');
   };
 
-  const onLoginClick: React.MouseEventHandler = (event) => {
+  const onLoginClick: React.MouseEventHandler = async (event) => {
     event.preventDefault();
+    const formData = new FormData(document.getElementById('register-form') as HTMLFormElement);
+
+    try {
+      await axios.get('/sanctum/csrf-cookie');
+      const response = await axios.post('login', formData);
+      console.log(response.statusText);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -29,7 +39,7 @@ export default function LoginPage() {
       alternativeActionText="Sign up here"
       alternativeAction={onRegisterClick}
     >
-      <Form className={formStyles.formClass}>
+      <Form id="register-form" className={formStyles.formClass}>
         <Form.Group>
           <Form.Label htmlFor="email" className={`${fontStyles.roboto} ${formStyles.formTextClass}`}>Email Address</Form.Label>
           <Form.Control id="email" name="email" className={`${formStyles.formControlClass} ${fontStyles.roboto}`} type="email" placeholder="joseph@mail.com" />
