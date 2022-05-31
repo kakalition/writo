@@ -7,5 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-    use HasFactory;
+  use HasFactory;
+
+  protected $fillable = [
+    'user_id',
+    'name',
+    'background_color',
+    'text_color',
+  ];
+
+  public function notes()
+  {
+    $this->belongsToMany(Note::class, 'note_tags', 'tag_id', 'note_id');
+  }
 }
