@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './css/custom.css';
@@ -10,11 +10,18 @@ import RegisterPage from './features/register/RegisterPage';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://localhost:8000';
+
+function Logout() {
+  useEffect(() => { axios.post('/logout'); }, []);
+  return <div />;
+}
+
 ReactDOM.createRoot(document.getElementById('root') as Element).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Routes>
