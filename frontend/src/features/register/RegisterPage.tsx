@@ -3,27 +3,10 @@ import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { createUseStyles } from 'react-jss';
 import { useNavigate } from 'react-router-dom';
-import { BackgroundStyles, FontStyles, SpacerStyles } from '../../common-component/JSSUtilities';
+import AuthContainerComponent from '../../common-component/AuthContainerComponent';
+import { FontStyles, SpacerStyles } from '../../common-component/JSSUtilities';
 
 const RegisterStyles = createUseStyles({
-  pageClass: {
-    padding: '0 5vw 0 5vw',
-  },
-  textClass: {
-    color: 'white',
-    fontSize: '6rem',
-  },
-  bottomTextClass: {
-    color: 'white',
-    fontSize: '1.1rem',
-  },
-  hyperlink: {
-    color: '#7EA2FF',
-    textDecoration: 'underline',
-    textUnderlineOffset: '2px',
-    borderColor: 'transparent',
-    backgroundColor: 'transparent',
-  },
   formTextClass: {
     color: 'white',
     fontSize: '1.5rem',
@@ -54,7 +37,6 @@ export default function RegisterPage() {
   const navigator = useNavigate();
 
   const registerStyles = RegisterStyles();
-  const backgroundStyles = BackgroundStyles();
   const spacerStyles = SpacerStyles();
   const fontStyles = FontStyles();
 
@@ -83,9 +65,12 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className={`d-flex flex-column align-items-start justify-content-center vh-100 vw-100 ${registerStyles.pageClass} ${backgroundStyles.bgDark}`}>
-      <h1 className={`${fontStyles.lato} ${registerStyles.textClass}`}>Create new account</h1>
-      <div className={spacerStyles.h4} />
+    <AuthContainerComponent
+      heading="Create new account"
+      alternativeText="Already have an account? "
+      alternativeActionText="Login here"
+      alternativeAction={onLoginClick}
+    >
       <Form id="login-form" className={registerStyles.formClass}>
         <Form.Group>
           <Form.Label htmlFor="name" className={`${fontStyles.roboto} ${registerStyles.formTextClass}`}>Name</Form.Label>
@@ -111,19 +96,6 @@ export default function RegisterPage() {
           Create account
         </Button>
       </Form>
-      <div className={spacerStyles.h4} />
-      <p className={registerStyles.bottomTextClass}>
-        Already have an account?
-        {' '}
-        <button
-          className={registerStyles.hyperlink}
-          type="button"
-          onClick={onLoginClick}
-        >
-          Login here
-          {' '}
-        </button>
-      </p>
-    </div>
+    </AuthContainerComponent>
   );
 }
