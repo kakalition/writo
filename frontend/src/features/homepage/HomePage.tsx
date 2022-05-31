@@ -1,7 +1,7 @@
 import { Button } from 'react-bootstrap';
 import { createUseStyles } from 'react-jss';
 import { useNavigate } from 'react-router-dom';
-import { SpacerStyles } from '../../common-component/JSSUtilities';
+import { BackgroundStyles, SpacerStyles } from '../../common-component/JSSUtilities';
 import UndrawBookSvg from '../../common-component/UndrawBookSvg';
 
 const HomeStyles = createUseStyles({
@@ -37,6 +37,7 @@ export default function HomePage() {
   const navigator = useNavigate();
   const homeStyles = HomeStyles();
   const spacerStyles = SpacerStyles();
+  const backgroundStyles = BackgroundStyles();
 
   const onGetStartedClick: React.MouseEventHandler = () => {
     navigator('/register');
@@ -47,7 +48,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className={`d-flex flex-column vh-100 vw-100 bg-dark ${homeStyles.pageClass}`}>
+    <div className={`d-flex flex-column vh-100 vw-100 ${homeStyles.pageClass} ${backgroundStyles.bgDark}`}>
       <div id="topbar" className={`d-flex flex-row w-100 justify-content-between align-items-center ${homeStyles.topbarClass}`}>
         <h1 className={homeStyles.topbarHeadingClass}>Writio</h1>
         <Button

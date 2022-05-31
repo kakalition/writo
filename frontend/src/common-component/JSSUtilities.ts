@@ -7,4 +7,31 @@ export const SpacerStyles = createUseStyles({
   h4: {
     height: '4rem',
   },
+  h6: {
+    height: '6rem',
+  },
+  h8: {
+    height: '8rem',
+  },
+  h10: {
+    height: '10rem',
+  },
+});
+
+export const BackgroundStyles = createUseStyles({
+  bgDark: {
+    backgroundColor: '#212529',
+  },
+});
+
+export const FontStyles = createUseStyles({
+  roboto: {
+    fontFamily: ['Roboto', 'sans-serif'],
+  },
+  libreBaskerville: {
+    fontFamily: ['Libre Baskerville', 'serif'],
+  },
+  lato: {
+    fontFamily: ['Lato', 'sans-serif'],
+  },
 });
