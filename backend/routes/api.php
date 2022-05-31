@@ -22,4 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('notes', [NoteController::class, 'all']);
 
-Route::get('tags', [TagController::class, 'all']);
+Route::get('tag/{user_id}/all', [TagController::class, 'all']);
+Route::post('tag/{user_id}/add', [TagController::class, 'store']);
+Route::patch('tag/{user_id}/update/{tag_id}', [TagController::class, 'updatePatch']);
+Route::put('tag/{user_id}/update/{tag_id}', [TagController::class, 'updatePut']);
