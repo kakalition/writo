@@ -1,44 +1,16 @@
 import axios from 'axios';
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { createUseStyles } from 'react-jss';
 import { useNavigate } from 'react-router-dom';
 import AuthContainerComponent from '../../common-component/AuthContainerComponent';
-import { FontStyles, SpacerStyles } from '../../common-component/JSSUtilities';
-
-const RegisterStyles = createUseStyles({
-  formTextClass: {
-    color: 'white',
-    fontSize: '1.5rem',
-    fontWeight: 300,
-  },
-  formControlClass: {
-    backgroundColor: '#212529',
-    width: '100%',
-    color: '#CFCFCF',
-    borderColor: '#CFCFCF',
-    fontSize: '1rem',
-    padding: '0.8rem 1rem 0.8rem 1rem',
-    '&:focus': {
-      color: 'white',
-      backgroundColor: '#212529',
-    },
-  },
-  formButton: {
-    fontSize: '1.3rem',
-    fontFamily: ['Roboto', 'sans-serif'],
-  },
-  formClass: {
-    width: '40%',
-  },
-});
+import { FontStyles, FormStyles, SpacerStyles } from '../../common-component/JSSUtilities';
 
 export default function RegisterPage() {
   const navigator = useNavigate();
 
-  const registerStyles = RegisterStyles();
   const spacerStyles = SpacerStyles();
   const fontStyles = FontStyles();
+  const formStyles = FormStyles();
 
   const onLoginClick: React.MouseEventHandler = (event) => {
     event.preventDefault();
@@ -71,24 +43,24 @@ export default function RegisterPage() {
       alternativeActionText="Login here"
       alternativeAction={onLoginClick}
     >
-      <Form id="login-form" className={registerStyles.formClass}>
+      <Form id="login-form" className={formStyles.formClass}>
         <Form.Group>
-          <Form.Label htmlFor="name" className={`${fontStyles.roboto} ${registerStyles.formTextClass}`}>Name</Form.Label>
-          <Form.Control id="name" name="name" className={`${registerStyles.formControlClass} ${fontStyles.roboto}`} type="text" placeholder="Joseph Joestar" />
+          <Form.Label htmlFor="name" className={`${fontStyles.roboto} ${formStyles.formTextClass}`}>Name</Form.Label>
+          <Form.Control id="name" name="name" className={`${formStyles.formControlClass} ${fontStyles.roboto}`} type="text" placeholder="Joseph Joestar" />
         </Form.Group>
         <div className={spacerStyles.h1half} />
         <Form.Group>
-          <Form.Label htmlFor="email" className={`${fontStyles.roboto} ${registerStyles.formTextClass}`}>Email Address</Form.Label>
-          <Form.Control id="email" name="email" className={`${registerStyles.formControlClass} ${fontStyles.roboto}`} type="email" placeholder="joseph@mail.com" />
+          <Form.Label htmlFor="email" className={`${fontStyles.roboto} ${formStyles.formTextClass}`}>Email Address</Form.Label>
+          <Form.Control id="email" name="email" className={`${formStyles.formControlClass} ${fontStyles.roboto}`} type="email" placeholder="joseph@mail.com" />
         </Form.Group>
         <div className={spacerStyles.h1half} />
         <Form.Group>
-          <Form.Label htmlFor="password" className={`${fontStyles.roboto} ${registerStyles.formTextClass}`}>Password</Form.Label>
-          <Form.Control id="password" name="password" className={`${registerStyles.formControlClass} ${fontStyles.roboto}`} type="password" placeholder="••••••••" />
+          <Form.Label htmlFor="password" className={`${fontStyles.roboto} ${formStyles.formTextClass}`}>Password</Form.Label>
+          <Form.Control id="password" name="password" className={`${formStyles.formControlClass} ${fontStyles.roboto}`} type="password" placeholder="••••••••" />
         </Form.Group>
         <div className={spacerStyles.h2} />
         <Button
-          className={registerStyles.formButton}
+          className={formStyles.formButton}
           variant="light"
           type="button"
           onClick={onSubmitClick}
