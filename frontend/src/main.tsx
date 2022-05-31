@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -7,6 +8,8 @@ import HomePage from './features/homepage/HomePage';
 import LoginPage from './features/login/LoginPage';
 import RegisterPage from './features/register/RegisterPage';
 
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'http://localhost:8000';
 ReactDOM.createRoot(document.getElementById('root') as Element).render(
   <React.StrictMode>
     <BrowserRouter>
