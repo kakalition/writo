@@ -28,7 +28,7 @@ class TagController extends Controller
 
   public function show(Tag $tag)
   {
-    return response(json_encode(response($tag));
+    return response(json_encode(response($tag)));
   }
 
   public function update(Request $request, Tag $tag)
@@ -52,7 +52,7 @@ class TagController extends Controller
 
   public function destroy(Tag $tag)
   {
-      $status = $tag->delete();
-      return response($status);
+    $status = $tag->delete();
+    return response($status);
   }
 }

@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\NoteTagController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
+use App\Models\NoteTag;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +31,5 @@ Route::apiResources([
   'tags' => TagController::class,
   'notes' => NoteController::class,
 ]);
+
+Route::apiResource('notetags', NoteTagController::class)->except('update');

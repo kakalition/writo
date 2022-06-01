@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 
 class NoteController extends Controller
 {
-  public function index(Request $request)
+  public function index()
   {
     $collection = Note::all();
+    foreach ($collection as $item) {
+      $item->tags;
+    }
+
     return response(json_encode($collection));
   }
 
@@ -26,6 +30,7 @@ class NoteController extends Controller
 
   public function show(Note $note)
   {
+    $note->tags;
     return response(json_encode($note));
   }
 

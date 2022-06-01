@@ -9,11 +9,16 @@ class UserController extends Controller
 {
   public function notes(User $user)
   {
-    return $user->notes;
+    $collection = $user->notes;
+    foreach($collection as $item) {
+      $item->tags;
+    }
+
+    return response(json_encode($collection));
   }
 
   public function tags(User $user)
   {
-    return $user->tags;
+    return response(json_encode($user->tags));
   }
 }
