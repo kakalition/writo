@@ -18,7 +18,7 @@ return new class extends Migration
       $table->foreignId('user_id')
         ->references('id')
         ->on('users')
-        ->onDelete('cascade');
+        ->cascadeOnDelete();
       $table->string('name');
       $table->string('background_color');
       $table->string('text_color');

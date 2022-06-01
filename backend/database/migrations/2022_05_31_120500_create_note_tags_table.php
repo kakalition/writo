@@ -18,11 +18,11 @@ return new class extends Migration
             $table->foreignId('note_id')
               ->references('id')
               ->on('notes')
-              ->onDelete('cascade');
+              ->cascadeOnDelete();
             $table->foreignId('tag_id')
               ->references('id')
               ->on('notes')
-              ->onDelete('cascade');
+              ->cascadeOnDelete();
             $table->timestamps();
         });
     }

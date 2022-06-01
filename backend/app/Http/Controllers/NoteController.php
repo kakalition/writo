@@ -7,10 +7,9 @@ use Illuminate\Http\Request;
 
 class NoteController extends Controller
 {
-  public function all(Request $request)
+  public function index(Request $request)
   {
-    $collection = Note::where('user_id', $request->query('user_id'))
-      ->get();
+    $collection = Note::all();
     return response(json_encode($collection));
   }
 
@@ -25,18 +24,28 @@ class NoteController extends Controller
     return response($note);
   }
 
-  public function patch(Note $note)
+  public function show(Note $note)
   {
-    //
+    return response(json_encode($note));
   }
 
-  public function put(Request $request, Note $note)
+  public function update(Request $request, Note $note)
   {
-    //
+    if ($request->input('title') != null) {
+      $note->title = $request->input('title');
+    }
+
+    if ($request->input('body') != null) {
+      $note->body = $request->input('body');
+    }
+
+    $note->save();
+
+    return response(json_encode($note));
   }
 
-  public function delete(Note $note)
+  public function destroy(Note $note)
   {
-    //
+    $note->delete();
   }
 }

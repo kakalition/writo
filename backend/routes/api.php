@@ -25,10 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('users/{user}/notes', [UserController::class, 'notes']);
 Route::get('users/{user}/tags', [UserController::class, 'tags']);
 
-Route::get('notes', [NoteController::class, 'index']);
-Route::post('notes', [NoteController::class, 'store']);
-Route::patch('notes', [NoteController::class, 'patch']);
-Route::put('notes', [NoteController::class, 'put']);
-Route::delete('notes', [NoteController::class, 'delete']);
-
-Route::apiResource('tags', TagController::class);
+Route::apiResources([
+  'tags' => TagController::class,
+  'notes' => NoteController::class,
+]);

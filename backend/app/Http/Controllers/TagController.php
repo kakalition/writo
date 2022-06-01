@@ -28,7 +28,7 @@ class TagController extends Controller
 
   public function show(Tag $tag)
   {
-    return response($tag);
+    return response(json_encode(response($tag));
   }
 
   public function update(Request $request, Tag $tag)
