@@ -32,4 +32,7 @@ Route::apiResources([
   'notes' => NoteController::class,
 ]);
 
+Route::get('tags/{tag}/notes', [TagController::class, 'notes']);
+Route::get('notes/{note}/tags', [NoteController::class, 'tags']);
+
 Route::apiResource('notetags', NoteTagController::class)->except('update');

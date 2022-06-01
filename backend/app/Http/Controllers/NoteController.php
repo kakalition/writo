@@ -53,4 +53,8 @@ class NoteController extends Controller
   {
     $note->delete();
   }
+
+  public function tags(Note $note) {
+    return response(json_encode($note->tags));
+  }
 }

@@ -55,4 +55,9 @@ class TagController extends Controller
     $status = $tag->delete();
     return response($status);
   }
+
+  public function notes(Tag $tag)
+  {
+    return response(json_encode($tag->notes));
+  }
 }
