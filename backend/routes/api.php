@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,10 +22,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
   return $request->user();
 });
 
-Route::get('notes', [NoteController::class, 'all']);
+Route::get('users/{user}/notes', [UserController::class, 'notes']);
+Route::get('users/{user}/tags', [UserController::class, 'tags']);
 
-Route::get('tags', [TagController::class, 'all']);
-Route::post('tags', [TagController::class, 'store']);
-Route::patch('tags', [TagController::class, 'patch']);
-Route::put('tags', [TagController::class, 'put']);
-Route::delete('tags', [TagController::class, 'delete']);
+Route::get('notes', [NoteController::class, 'index']);
+Route::post('notes', [NoteController::class, 'store']);
+Route::patch('notes', [NoteController::class, 'patch']);
+Route::put('notes', [NoteController::class, 'put']);
+Route::delete('notes', [NoteController::class, 'delete']);
+
+Route::apiResource('tags', TagController::class);

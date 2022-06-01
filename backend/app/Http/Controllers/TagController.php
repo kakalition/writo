@@ -8,10 +8,9 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
-  public function all(Request $request)
+  public function index()
   {
-    $collection = Tag::where('user_id', $request->query('user_id'))
-      ->get();
+    $collection = Tag::all();
     return response(json_encode($collection));
   }
 
@@ -27,45 +26,33 @@ class TagController extends Controller
     return response($tag, 200);
   }
 
-  public function patch(Request $request)
+  public function show(Tag $tag)
   {
-    $target = Tag::where('id', $request->input('tag_id'))
-      ->first();
+    return response($tag);
+  }
 
+  public function update(Request $request, Tag $tag)
+  {
     if ($request->input('name') != null) {
-      $target->name = $request->input('name');
+      $tag->name = $request->input('name');
     }
 
     if ($request->input('background_color') != null) {
-      $target->background_color = $request->input('background_color');
+      $tag->background_color = $request->input('background_color');
     }
 
     if ($request->input('text_color') != null) {
-      $target->text_color = $request->input('text_color');
+      $tag->text_color = $request->input('text_color');
     }
 
-    $target->save();
+    $tag->save();
 
-    return response(json_encode($target));
+    return response(json_encode($tag));
   }
 
-  public function put(Request $request)
+  public function destroy(Tag $tag)
   {
-    $target = Tag::where('id', $request->input('tag_id'))
-      ->first()
-      ->update([
-        'name' => $request->input('name'),
-        'background_color' => $request->input('background_color'),
-        'text_color' => $request->input('text_color'),
-      ]);
-
-    return response(json_encode($target));
-  }
-
-  public function delete(Request $request)
-  {
-    $target = Tag::where('id', $request->input('tag_id'))
-      ->first()
-      ->delete();
+      $status = $tag->delete();
+      return response($status);
   }
 }
