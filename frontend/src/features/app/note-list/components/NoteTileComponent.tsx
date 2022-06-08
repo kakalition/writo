@@ -1,4 +1,3 @@
-/* import { BackgroundStyles, FontStyles, SpacerStyles } from '../../../../common-component/JSSUtilities';
 import { NoteType } from '../../typedefs/NoteType';
 
 type Params = {
@@ -6,48 +5,19 @@ type Params = {
 };
 
 export default function NoteTileComponent({ noteType }: Params) {
-  const fontStyles = FontStyles();
-  const spacerStyles = SpacerStyles();
-  const backgroundStyles = BackgroundStyles();
-
   return (
-    <div
-      className="d-flex flex-column bg-light"
-    >
-      <h2
-        className={`${fontStyles.libreBaskerville}`}
-        style={{
-          width: '100%',
-          fontSize: '2.3rem',
-          color: 'black',
-        }}
-      >
+    <div className="flex flex-col p-6 bg-gray-50">
+      <h2 className="w-full text-3xl text-black font-libre-baskerville">
         {noteType.title}
       </h2>
-      <div style={{ height: '1rem' }} />
-      <p
-        className={`${fontStyles.roboto}`}
-        style={{
-          width: '100%',
-          fontSize: '1.3rem',
-          color: 'black',
-          fontWeight: 300,
-        }}
-      >
+      <div className="h-4" />
+      <p className="w-full text-base text-black font-roboto">
         {noteType.body}
       </p>
-      <div style={{ height: '1rem' }} />
-      <p
-        className={`${fontStyles.roboto}`}
-        style={{
-          width: '100%',
-          fontSize: '1.2rem',
-          color: 'gray',
-        }}
-      >
+      <div className="h-4" />
+      <p className="w-full text-base text-gray-500 font-roboto">
         {(new Date(noteType.timestamp).toDateString())}
       </p>
     </div>
   );
 }
- */
