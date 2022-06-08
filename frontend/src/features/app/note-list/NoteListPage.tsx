@@ -10,8 +10,8 @@ const dummyData: NoteType[] = [
     title: 'Covalent Bonding',
     body: 'A covalent bond is a chemical bond that involves the sharing of electron pairs between atoms.These electron pairs are known as shared pairs or bonding pairs, and the stable balance of attractive an...',
     tag: [
-      { name: 'Chemistry', body_color: '#000000', text_color: '#FFFFFF' },
-      { name: 'Project', body_color: '#000000', text_color: '#FFFFFF' },
+      { name: 'Chemistry', body_color: '#E8CBA9', text_color: '#615547' },
+      { name: 'Project', body_color: '#E5CEE0', text_color: '#4B4049' },
     ],
     timestamp: 1653978467000,
   },
