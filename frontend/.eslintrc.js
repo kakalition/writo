@@ -11,6 +11,7 @@ module.exports = {
     'airbnb',
     'airbnb-typescript',
     'plugin:react/jsx-runtime',
+    'plugin:tailwindcss/recommended'
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -25,12 +26,16 @@ module.exports = {
   plugins: [
     'react',
     '@typescript-eslint',
+    'tailwindcss'
   ],
   rules: {
     'react/jsx-filename-extension': [2, { extensions: ['.tsx', '.ts'] }],
     'react/prop-types': 'off',
     'react/require-default-props': 'off',
     'no-underscore-dangle': 0,
+    'tailwindcss/no-custom-classname': [0, {
+      'config': './tailwind.config.js'
+    }]
   },
   settings: {
     'import/resolver': {

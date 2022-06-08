@@ -1,18 +1,13 @@
 import axios from 'axios';
-import React from 'react';
-import {
-  Button, Form,
-} from 'react-bootstrap';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContainerComponent from '../../common-component/AuthContainerComponent';
-import { FontStyles, FormStyles, SpacerStyles } from '../../common-component/JSSUtilities';
+import InputComponent from '../../common-component/InputComponent';
 
 export default function LoginPage() {
   const navigator = useNavigate();
-
-  const formStyles = FormStyles();
-  const fontStyles = FontStyles();
-  const spacerStyles = SpacerStyles();
+  const [emailError, setEmailError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
 
   const onRegisterClick: React.MouseEventHandler = (event) => {
     event.preventDefault();
@@ -21,44 +16,53 @@ export default function LoginPage() {
 
   const onLoginClick: React.MouseEventHandler = async (event) => {
     event.preventDefault();
-    const formData = new FormData(document.getElementById('register-form') as HTMLFormElement);
+    const formData = new FormData(document.getElementById('login-form') as HTMLFormElement);
 
     try {
       await axios.get('/sanctum/csrf-cookie');
       const response = await axios.post('login', formData);
       console.log(response.statusText);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      const { email, password } = error.response.data.errors;
+      setEmailError(email?.[0] ?? null);
+      setPasswordError(password?.[0] ?? null);
     }
   };
 
   return (
-    <AuthContainerComponent
-      heading="Login"
-      alternativeText="Not a member, yet?"
-      alternativeActionText="Sign up here"
-      alternativeAction={onRegisterClick}
-    >
-      <Form id="register-form" className={formStyles.formClass}>
-        <Form.Group>
-          <Form.Label htmlFor="email" className={`${fontStyles.roboto} ${formStyles.formTextClass}`}>Email Address</Form.Label>
-          <Form.Control id="email" name="email" className={`${formStyles.formControlClass} ${fontStyles.roboto}`} type="email" placeholder="joseph@mail.com" />
-        </Form.Group>
-        <div className={spacerStyles.h1half} />
-        <Form.Group>
-          <Form.Label htmlFor="password" className={`${fontStyles.roboto} ${formStyles.formTextClass}`}>Password</Form.Label>
-          <Form.Control id="password" name="password" className={`${formStyles.formControlClass} ${fontStyles.roboto}`} type="password" placeholder="••••••••" />
-        </Form.Group>
-        <div className={spacerStyles.h2} />
-        <Button
-          className={formStyles.formButton}
-          variant="light"
-          type="button"
-          onClick={onLoginClick}
-        >
-          Login
-        </Button>
-      </Form>
-    </AuthContainerComponent>
+    <div className="flex justify-center items-center w-screen h-screen bg-gray-900">
+      <AuthContainerComponent
+        heading="Login"
+        alternativeText="Not a member, yet?"
+        alternativeActionText="Sign up here"
+        alternativeAction={onRegisterClick}
+      >
+        <form id="login-form" className="flex flex-col w-full">
+          <InputComponent
+            id="email"
+            label="Email address"
+            type="email"
+            placeholder="joseph@mail.com"
+            error={emailError}
+          />
+          <div className="h-6" />
+          <InputComponent
+            id="password"
+            label="Password"
+            type="password"
+            placeholder="••••••••"
+            error={passwordError}
+          />
+          <div className="h-16" />
+          <button
+            type="button"
+            className="py-4 px-10 text-xl text-black bg-white rounded-lg font-roboto"
+            onClick={onLoginClick}
+          >
+            Login
+          </button>
+        </form>
+      </AuthContainerComponent>
+    </div>
   );
 }
