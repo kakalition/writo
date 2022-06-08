@@ -8,6 +8,7 @@ import NoteListPage from './features/app/note-list/NoteListPage';
 import HomePage from './features/homepage/HomePage';
 import LoginPage from './features/login/LoginPage';
 import RegisterPage from './features/register/RegisterPage';
+import './index.css';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://localhost:8000';
