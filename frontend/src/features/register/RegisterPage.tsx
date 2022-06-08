@@ -1,16 +1,10 @@
-/* import axios from 'axios';
+import axios from 'axios';
 import React from 'react';
-import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import AuthContainerComponent from '../../common-component/AuthContainerComponent';
-import { FontStyles, FormStyles, SpacerStyles } from '../../common-component/JSSUtilities';
 
 export default function RegisterPage() {
   const navigator = useNavigate();
-
-  const spacerStyles = SpacerStyles();
-  const fontStyles = FontStyles();
-  const formStyles = FormStyles();
 
   const onLoginClick: React.MouseEventHandler = (event) => {
     event.preventDefault();
@@ -43,7 +37,7 @@ export default function RegisterPage() {
       alternativeActionText="Login here"
       alternativeAction={onLoginClick}
     >
-      <Form id="login-form" className={formStyles.formClass}>
+      {/*       <Form id="login-form" className={formStyles.formClass}>
         <Form.Group>
           <Form.Label htmlFor="name" className={`${fontStyles.roboto} ${formStyles.formTextClass}`}>Name</Form.Label>
           <Form.Control id="name" name="name" className={`${formStyles.formControlClass} ${fontStyles.roboto}`} type="text" placeholder="Joseph Joestar" />
@@ -67,8 +61,7 @@ export default function RegisterPage() {
         >
           Create account
         </Button>
-      </Form>
+      </Form> */}
     </AuthContainerComponent>
   );
 }
- */

@@ -1,6 +1,4 @@
 import React from 'react';
-import { createUseStyles } from 'react-jss';
-import { BackgroundStyles, FontStyles, SpacerStyles } from './JSSUtilities';
 
 type Params = {
   heading: string,
@@ -10,46 +8,20 @@ type Params = {
   children: React.ReactNode
 };
 
-const AuthStyles = createUseStyles({
-  pageClass: {
-    padding: '0 5vw 0 5vw',
-  },
-  textClass: {
-    color: 'white',
-    fontSize: '6rem',
-  },
-  bottomTextClass: {
-    color: 'white',
-    fontSize: '1.1rem',
-  },
-  hyperlink: {
-    color: '#7EA2FF',
-    textDecoration: 'underline',
-    textUnderlineOffset: '2px',
-    borderColor: 'transparent',
-    backgroundColor: 'transparent',
-  },
-});
-
 export default function AuthContainerComponent({
   heading, alternativeText, alternativeActionText, alternativeAction, children,
 }: Params) {
-  const spacerStyles = SpacerStyles();
-  const fontStyles = FontStyles();
-  const backgroundStyles = BackgroundStyles();
-  const authStyles = AuthStyles();
-
   return (
-    <div className={`d-flex flex-column align-items-start justify-content-center vh-100 vw-100 ${authStyles.pageClass} ${backgroundStyles.bgDark}`}>
-      <h1 className={`${fontStyles.lato} ${authStyles.textClass}`}>{heading}</h1>
-      <div className={spacerStyles.h4} />
+    <div className="flex flex-col justify-center items-start px-24 w-screen h-screen bg-gray-900">
+      <h1 className="text-6xl text-white font-lato">{heading}</h1>
+      <div className="h-8" />
       {children}
-      <div className={spacerStyles.h4} />
-      <p className={authStyles.bottomTextClass}>
+      <div className="h-8" />
+      <p className="text-xl text-white font-lato">
         {alternativeText}
         {' '}
         <button
-          className={authStyles.hyperlink}
+          className="text-xl text-blue-500 font-lato"
           type="button"
           onClick={alternativeAction}
         >
