@@ -12,16 +12,16 @@ export default function AuthContainerComponent({
   heading, alternativeText, alternativeActionText, alternativeAction, children,
 }: Params) {
   return (
-    <div className="flex flex-col justify-center items-start px-24 w-screen h-screen bg-gray-900">
-      <h1 className="text-6xl text-white font-lato">{heading}</h1>
-      <div className="h-8" />
+    <div className="flex flex-col justify-center items-center w-1/3">
+      <h1 className="text-6xl font-bold text-white font-roboto">{heading}</h1>
+      <div className="h-16" />
       {children}
-      <div className="h-8" />
-      <p className="text-xl text-white font-lato">
+      <div className="h-16" />
+      <p className="text-lg text-gray-200 font-lato">
         {alternativeText}
         {' '}
         <button
-          className="text-xl text-blue-500 font-lato"
+          className="text-xl text-blue-500 underline underline-offset-2 font-lato"
           type="button"
           onClick={alternativeAction}
         >

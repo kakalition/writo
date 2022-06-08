@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContainerComponent from '../../common-component/AuthContainerComponent';
+import InputComponent from '../../common-component/InputComponent';
 
 export default function RegisterPage() {
   const navigator = useNavigate();
@@ -31,37 +32,29 @@ export default function RegisterPage() {
   };
 
   return (
-    <AuthContainerComponent
-      heading="Create new account"
-      alternativeText="Already have an account? "
-      alternativeActionText="Login here"
-      alternativeAction={onLoginClick}
-    >
-      {/*       <Form id="login-form" className={formStyles.formClass}>
-        <Form.Group>
-          <Form.Label htmlFor="name" className={`${fontStyles.roboto} ${formStyles.formTextClass}`}>Name</Form.Label>
-          <Form.Control id="name" name="name" className={`${formStyles.formControlClass} ${fontStyles.roboto}`} type="text" placeholder="Joseph Joestar" />
-        </Form.Group>
-        <div className={spacerStyles.h1half} />
-        <Form.Group>
-          <Form.Label htmlFor="email" className={`${fontStyles.roboto} ${formStyles.formTextClass}`}>Email Address</Form.Label>
-          <Form.Control id="email" name="email" className={`${formStyles.formControlClass} ${fontStyles.roboto}`} type="email" placeholder="joseph@mail.com" />
-        </Form.Group>
-        <div className={spacerStyles.h1half} />
-        <Form.Group>
-          <Form.Label htmlFor="password" className={`${fontStyles.roboto} ${formStyles.formTextClass}`}>Password</Form.Label>
-          <Form.Control id="password" name="password" className={`${formStyles.formControlClass} ${fontStyles.roboto}`} type="password" placeholder="••••••••" />
-        </Form.Group>
-        <div className={spacerStyles.h2} />
-        <Button
-          className={formStyles.formButton}
-          variant="light"
-          type="button"
-          onClick={onSubmitClick}
-        >
-          Create account
-        </Button>
-      </Form> */}
-    </AuthContainerComponent>
+    <div className="flex justify-center items-center w-screen h-screen bg-gray-900">
+      <AuthContainerComponent
+        heading="New Account"
+        alternativeText="Already have an account? "
+        alternativeActionText="Login here"
+        alternativeAction={onLoginClick}
+      >
+        <form className="flex flex-col w-full">
+          <InputComponent id="name" label="Name" type="text" placeholder="Joseph Joestar" />
+          <div className="h-6" />
+          <InputComponent id="email" label="Email address" type="email" placeholder="joseph@mail.com" />
+          <div className="h-6" />
+          <InputComponent id="password" label="Password" type="password" placeholder="••••••••" />
+          <div className="h-16" />
+          <button
+            type="button"
+            className="py-4 px-10 text-xl text-black bg-white rounded-lg font-roboto"
+            onClick={onSubmitClick}
+          >
+            Create account
+          </button>
+        </form>
+      </AuthContainerComponent>
+    </div>
   );
 }

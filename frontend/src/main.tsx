@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './features/homepage/HomePage';
+import LoginPage from './features/login/LoginPage';
 import RegisterPage from './features/register/RegisterPage';
 import './index.css';
 
@@ -25,7 +26,7 @@ ReactDOM.createRoot(document.getElementById('root') as Element).render(
         <Route path="/" element={<HomePage />} />
         <Route path="/test" element={<Test />} />
         <Route path="/logout" element={<Logout />} />
-        {/*         <Route path="/login" element={<LoginPage />} /> */}
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         {/*         <Route path="/app" element={<NoteListPage />} /> */}
       </Routes>
