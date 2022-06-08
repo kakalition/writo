@@ -1,4 +1,4 @@
-import { BackgroundStyles, FontStyles, SpacerStyles } from '../../../../common-component/JSSUtilities';
+/* import { BackgroundStyles, FontStyles, SpacerStyles } from '../../../../common-component/JSSUtilities';
 import { NoteType } from '../../typedefs/NoteType';
 
 type Params = {
@@ -50,3 +50,4 @@ export default function NoteTileComponent({ noteType }: Params) {
     </div>
   );
 }
+ */

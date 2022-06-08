@@ -1,43 +1,8 @@
-import { Button } from 'react-bootstrap';
-import { createUseStyles } from 'react-jss';
 import { useNavigate } from 'react-router-dom';
-import { BackgroundStyles, SpacerStyles } from '../../common-component/JSSUtilities';
 import UndrawBookSvg from '../../common-component/UndrawBookSvg';
-
-const HomeStyles = createUseStyles({
-  pageClass: {
-    padding: '0 5vw 0 5vw',
-  },
-  topbarClass: {
-    paddingTop: '4vh',
-  },
-  topbarHeadingClass: {
-    fontFamily: ['Libre Baskerville', 'sans-serif'],
-    fontSize: '2rem',
-    color: 'white',
-  },
-  buttonClass: {
-    padding: '0.8rem 2.4rem 0.8rem 2.4rem',
-    fontFamily: ['Roboto', 'sans-serif'],
-    fontSize: '1.2rem',
-  },
-  ctaClass: {
-    padding: '1rem 3rem 1rem 3rem',
-    fontFamily: ['Roboto', 'sans-serif'],
-    fontSize: '2rem',
-  },
-  contentClass: {
-    fontFamily: ['Libre Baskerville', 'serif'],
-    fontSize: '5rem',
-    color: 'white',
-  },
-});
 
 export default function HomePage() {
   const navigator = useNavigate();
-  const homeStyles = HomeStyles();
-  const spacerStyles = SpacerStyles();
-  const backgroundStyles = BackgroundStyles();
 
   const onGetStartedClick: React.MouseEventHandler = () => {
     navigator('/register');
@@ -47,8 +12,8 @@ export default function HomePage() {
     navigator('/login');
   };
 
-  return (
-    <div className={`d-flex flex-column vh-100 vw-100 ${homeStyles.pageClass} ${backgroundStyles.bgDark}`}>
+  return (<div />
+  /*     <div className={`d-flex flex-column vh-100 vw-100 ${homeStyles.pageClass} ${backgroundStyles.bgDark}`}>
       <div id="topbar" className={`d-flex flex-row w-100 justify-content-between align-items-center ${homeStyles.topbarClass}`}>
         <h1 className={homeStyles.topbarHeadingClass}>Writio</h1>
         <Button
@@ -85,6 +50,6 @@ export default function HomePage() {
         </div>
         <div id="adjustment1" className={spacerStyles.h4} />
       </div>
-    </div>
+    </div> */
   );
 }

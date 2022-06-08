@@ -1,4 +1,4 @@
-import { Form } from 'react-bootstrap';
+/* import { Form } from 'react-bootstrap';
 import { createUseStyles } from 'react-jss';
 import GridIcon from '../../../common-component/icons/GridIcon';
 import PlusIcon from '../../../common-component/icons/PlusIcon';
@@ -211,3 +211,4 @@ export default function NoteListPage() {
     </div>
   );
 }
+ */
