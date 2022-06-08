@@ -23,10 +23,10 @@ ReactDOM.createRoot(document.getElementById('root') as Element).render(
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/test" element={<Test />} />
-        {/*         <Route path="/logout" element={<Logout />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/logout" element={<Logout />} />
+        {/*         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/app" element={<NoteListPage />} /> */}
+        <Route path="/app" element={<NoteListPage />} />  */}
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

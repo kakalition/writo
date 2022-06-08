@@ -1,6 +1,6 @@
 export default function UndrawBookSvg() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" width="911.60164" height="451.38424" viewBox="0 0 911.60164 451.38424" xmlnsXlink="http://www.w3.org/1999/xlink">
+    <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 911.60164 451.38424" xmlnsXlink="http://www.w3.org/1999/xlink">
       <path d="M666.90719,666.03923a21.28318,21.28318,0,0,1,0-42.56635H983.042a18.5053,18.5053,0,0,0-16.2373-9.65283H338.41256a30.93217,30.93217,0,0,0-30.89746,30.936,30.95171,30.95171,0,0,0,30.89746,30.936H966.80465a18.506,18.506,0,0,0,16.2373-9.65289Z" transform="translate(-144.19918 -224.30788)" fill="#ccc" />
       <path d="M983.46178,635.20036H682.89113a1.73741,1.73741,0,0,1,0-3.47481H983.46178a1.73741,1.73741,0,0,1,0,3.47481Z" transform="translate(-144.19918 -224.30788)" fill="#ccc" />
       <path d="M983.46178,646.49347H682.89113a1.7374,1.7374,0,0,1,0-3.4748H983.46178a1.7374,1.7374,0,0,1,0,3.4748Z" transform="translate(-144.19918 -224.30788)" fill="#ccc" />

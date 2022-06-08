@@ -4,7 +4,14 @@ module.exports = {
     './src/**/*.{vue,js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'ibm-plex-sans': ['IBM Plex Sans', 'sans-serif'],
+        'lato': ['Lato', 'sans-serif'],
+        'libre-baskerville': ['Libre Baskerville', 'serif'],
+        'roboto': ['Roboto', 'sans-serif'],
+      }
+    },
   },
   plugins: [],
 }

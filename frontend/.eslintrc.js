@@ -33,6 +33,9 @@ module.exports = {
     'react/prop-types': 'off',
     'react/require-default-props': 'off',
     'no-underscore-dangle': 0,
+    'tailwindcss/no-custom-classname': [0, {
+      'config': './tailwind.config.js'
+    }]
   },
   settings: {
     'import/resolver': {
