@@ -1,16 +1,13 @@
 import { useMemo, useState } from 'react';
 import AppNavbarComponent from '../../common-component/AppNavbarComponent';
-import NoteListTabComponent from './note-list/components/NoteListTabComponent';
-import NoteTabComponent from './note-list/components/NoteTabComponent';
-import SearchbarComponent from './note-list/components/SearchbarComponent';
 import TagCardComponent from './note-list/components/TagCardComponent';
-import TagListTabComponent from './note-list/components/TagListTabComponent';
 import NoteListPage from './note-list/NoteListPage';
 import NoteListPageTabEnum from './note-list/typedefs/NoteListPageTabEnum';
 import NoteDataMapper from './note-list/utils/NoteDataMapper';
 import NotePage from './note-page/NotePage';
 import { NoteType } from './typedefs/NoteType';
 import { TagCollectionType } from './typedefs/TagCollectionType';
+import TagListPage from './tag-list/TagListPage';
 
 const dummyData: NoteType[] = [
   {
@@ -129,7 +126,7 @@ export default function AppPage() {
     }
 
     if (currentTab === NoteListPageTabEnum.TagList) {
-      return <TagListTabComponent tagComponents={generatedTags} />;
+      return <TagListPage tagComponents={generatedTags} />;
     }
 
     return <NotePage />;
