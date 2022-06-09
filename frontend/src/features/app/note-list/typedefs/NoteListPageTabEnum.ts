@@ -1,6 +1,7 @@
 enum NoteListPageTabEnum {
+  NoteList,
+  TagList,
   Note,
-  Tag,
 }
 
 export default NoteListPageTabEnum;

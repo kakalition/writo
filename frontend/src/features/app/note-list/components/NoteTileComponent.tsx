@@ -1,4 +1,4 @@
-import TagComponent from '../../../../common-component/icons/TagComponent';
+import TagComponent from '../../../../common-component/TagComponent';
 import { NoteType } from '../../typedefs/NoteType';
 
 type Params = {

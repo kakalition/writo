@@ -112,7 +112,7 @@ const dummyTags: TagCollectionType[] = [
 ];
 
 export default function NoteListPage() {
-  const [currentTab, setCurrentTab] = useState<NoteListPageTabEnum>(NoteListPageTabEnum.Note);
+  const [currentTab, setCurrentTab] = useState<NoteListPageTabEnum>(NoteListPageTabEnum.NoteList);
 
   const sortedData = dummyData.sort((a, b) => b.timestamp - a.timestamp);
   const generatedComponent = useMemo(() => NoteDataMapper(sortedData), [sortedData]);
@@ -121,7 +121,7 @@ export default function NoteListPage() {
   ), []);
 
   const tabComponent = useMemo(() => {
-    if (currentTab === NoteListPageTabEnum.Note) {
+    if (currentTab === NoteListPageTabEnum.NoteList) {
       return <NoteListTabComponent noteComponents={generatedComponent} />;
     }
     return <TagListTabComponent tagComponents={generatedTags} />;
@@ -132,8 +132,8 @@ export default function NoteListPage() {
       <AppNavbarComponent
         currentTab={currentTab}
         onNewNoteClick={() => console.log('implement')}
-        onNoteTabClick={() => setCurrentTab(NoteListPageTabEnum.Note)}
-        onTagTabClick={() => setCurrentTab(NoteListPageTabEnum.Tag)}
+        onNoteTabClick={() => setCurrentTab(NoteListPageTabEnum.NoteList)}
+        onTagTabClick={() => setCurrentTab(NoteListPageTabEnum.TagList)}
         onUserClick={() => console.log('implement')}
       />
       <div id="app-content" className="flex flex-col w-full h-full">
