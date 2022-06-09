@@ -1,9 +1,7 @@
 import { useMemo, useState } from 'react';
 import AppNavbarComponent from '../../common-component/AppNavbarComponent';
-import TagCardComponent from './note-list/components/TagCardComponent';
 import NoteListPage from './note-list/NoteListPage';
 import NoteListPageTabEnum from './note-list/typedefs/NoteListPageTabEnum';
-import NoteDataMapper from './note-list/utils/NoteDataMapper';
 import NotePage from './note-page/NotePage';
 import { NoteType } from './typedefs/NoteType';
 import { TagCollectionType } from './typedefs/TagCollectionType';
@@ -114,23 +112,17 @@ const dummyTags: TagCollectionType[] = [
 export default function AppPage() {
   const [currentTab, setCurrentTab] = useState<NoteListPageTabEnum>(NoteListPageTabEnum.NoteList);
 
-  const sortedData = dummyData.sort((a, b) => b.timestamp - a.timestamp);
-  const generatedComponent = useMemo(() => NoteDataMapper(sortedData), [sortedData]);
-  const generatedTags = useMemo(() => dummyTags.map(
-    (element) => <TagCardComponent tag={element} />,
-  ), []);
-
   const tabComponent = useMemo(() => {
     if (currentTab === NoteListPageTabEnum.NoteList) {
-      return <NoteListPage noteComponents={generatedComponent} />;
+      return <NoteListPage notesData={dummyData} />;
     }
 
     if (currentTab === NoteListPageTabEnum.TagList) {
-      return <TagListPage tagComponents={generatedTags} />;
+      return <TagListPage tagCollectionData={dummyTags} />;
     }
 
     return <NotePage />;
-  }, [currentTab, generatedComponent, generatedTags]);
+  }, [currentTab]);
 
   return (
     <div id="page-container" className="flex overflow-hidden flex-row w-screen h-screen">
