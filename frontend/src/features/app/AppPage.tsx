@@ -9,7 +9,7 @@ import TagListPage from './tag-list/TagListPage';
 
 const dummyData: NoteType[] = [
   {
-    title: 'Covalent Bonding',
+    title: 'Advanced Covalent Bonding',
     body: 'A covalent bond is a chemical bond that involves the sharing of electron pairs between atoms.These electron pairs are known as shared pairs or bonding pairs, and the stable balance of attractive an...',
     tag: [
       { name: 'Chemistry', body_color: '#E8CBA9', text_color: '#615547' },
@@ -121,7 +121,7 @@ export default function AppPage() {
       return <TagListPage tagCollectionData={dummyTags} />;
     }
 
-    return <NotePage />;
+    return <NotePage notesData={dummyData} />;
   }, [currentTab]);
 
   return (
