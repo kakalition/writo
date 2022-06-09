@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import AppNavbarComponent from '../../../common-component/AppNavbarComponent';
 import { NoteType } from '../typedefs/NoteType';
-import { TagType } from '../typedefs/TagType';
+import { TagCollectionType } from '../typedefs/TagCollectionType';
 import NoteTabComponent from './components/NoteTabComponent';
 import SearchbarComponent from './components/SearchbarComponent';
 import TagCardComponent from './components/TagCardComponent';
@@ -84,7 +84,7 @@ const dummyData: NoteType[] = [
   },
 ];
 
-const dummyTags: TagType[] = [
+const dummyTags: TagCollectionType[] = [
   {
     name: 'Project',
     body_color: '#4F4F4F',

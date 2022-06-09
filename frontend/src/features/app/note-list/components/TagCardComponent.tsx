@@ -1,7 +1,7 @@
-import { TagType } from '../../typedefs/TagType';
+import { TagCollectionType } from '../../typedefs/TagCollectionType';
 
 type Params = {
-  tag: TagType
+  tag: TagCollectionType
 };
 
 export default function TagCardComponent({ tag }: Params) {
