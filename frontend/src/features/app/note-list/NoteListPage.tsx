@@ -3,6 +3,7 @@ import AppNavbarComponent from '../../../common-component/AppNavbarComponent';
 import { NoteType } from '../typedefs/NoteType';
 import { TagCollectionType } from '../typedefs/TagCollectionType';
 import NoteListTabComponent from './components/NoteListTabComponent';
+import NoteTabComponent from './components/NoteTabComponent';
 import SearchbarComponent from './components/SearchbarComponent';
 import TagCardComponent from './components/TagCardComponent';
 import TagListTabComponent from './components/TagListTabComponent';
@@ -124,7 +125,12 @@ export default function NoteListPage() {
     if (currentTab === NoteListPageTabEnum.NoteList) {
       return <NoteListTabComponent noteComponents={generatedComponent} />;
     }
-    return <TagListTabComponent tagComponents={generatedTags} />;
+
+    if (currentTab === NoteListPageTabEnum.TagList) {
+      return <TagListTabComponent tagComponents={generatedTags} />;
+    }
+
+    return <NoteTabComponent />;
   }, [currentTab, generatedComponent, generatedTags]);
 
   return (
@@ -132,8 +138,9 @@ export default function NoteListPage() {
       <AppNavbarComponent
         currentTab={currentTab}
         onNewNoteClick={() => console.log('implement')}
-        onNoteTabClick={() => setCurrentTab(NoteListPageTabEnum.NoteList)}
-        onTagTabClick={() => setCurrentTab(NoteListPageTabEnum.TagList)}
+        onNoteListTabClick={() => setCurrentTab(NoteListPageTabEnum.NoteList)}
+        onTagListTabClick={() => setCurrentTab(NoteListPageTabEnum.TagList)}
+        onNoteTabClick={() => setCurrentTab(NoteListPageTabEnum.Note)}
         onUserClick={() => console.log('implement')}
       />
       <div id="app-content" className="flex flex-col w-full h-full">

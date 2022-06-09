@@ -9,13 +9,14 @@ import UserIcon from './icons/UserIcon';
 type Params = {
   currentTab: NoteListPageTabEnum,
   onNewNoteClick: React.MouseEventHandler,
+  onNoteListTabClick: React.MouseEventHandler,
+  onTagListTabClick: React.MouseEventHandler,
   onNoteTabClick: React.MouseEventHandler,
-  onTagTabClick: React.MouseEventHandler,
   onUserClick: React.MouseEventHandler,
 };
 
 export default function AppNavbarComponent({
-  currentTab, onNewNoteClick, onNoteTabClick, onTagTabClick, onUserClick,
+  currentTab, onNewNoteClick, onNoteListTabClick, onTagListTabClick, onNoteTabClick, onUserClick,
 }: Params) {
   const iconClass = 'w-6 h-6 stroke-[0.12rem]';
 
@@ -31,7 +32,7 @@ export default function AppNavbarComponent({
       <div className="h-16" />
       <button
         type="button"
-        onClick={onNoteTabClick}
+        onClick={onNoteListTabClick}
         className={`${iconClass} ${currentTab === NoteListPageTabEnum.NoteList ? 'stroke-gray-100' : 'stroke-gray-400'}`}
       >
         <GridIcon />
@@ -39,7 +40,7 @@ export default function AppNavbarComponent({
       <div className="h-16" />
       <button
         type="button"
-        onClick={onTagTabClick}
+        onClick={onTagListTabClick}
         className={`${iconClass} ${currentTab === NoteListPageTabEnum.TagList ? 'stroke-gray-100' : 'stroke-gray-400'}`}
       >
         <TagIcon />
@@ -47,7 +48,7 @@ export default function AppNavbarComponent({
       <div className="h-16" />
       <button
         type="button"
-        onClick={onTagTabClick}
+        onClick={onNoteTabClick}
         className={`${iconClass} ${currentTab === NoteListPageTabEnum.Note ? 'stroke-gray-100' : 'stroke-gray-400'}`}
       >
         <BookIcon />
