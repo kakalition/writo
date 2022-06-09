@@ -1,7 +1,7 @@
 type Params = {
   name: string,
   body_color: string,
-  text_color: string
+  text_color: string,
 };
 
 export default function TagComponent({
