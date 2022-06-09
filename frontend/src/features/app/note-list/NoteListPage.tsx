@@ -2,10 +2,10 @@ import { useMemo, useState } from 'react';
 import AppNavbarComponent from '../../../common-component/AppNavbarComponent';
 import { NoteType } from '../typedefs/NoteType';
 import { TagCollectionType } from '../typedefs/TagCollectionType';
-import NoteTabComponent from './components/NoteTabComponent';
+import NoteListTabComponent from './components/NoteListTabComponent';
 import SearchbarComponent from './components/SearchbarComponent';
 import TagCardComponent from './components/TagCardComponent';
-import TagTabComponent from './components/TagTabComponent';
+import TagListTabComponent from './components/TagListTabComponent';
 import NoteListPageTabEnum from './typedefs/NoteListPageTabEnum';
 import NoteDataMapper from './utils/NoteDataMapper';
 
@@ -122,9 +122,9 @@ export default function NoteListPage() {
 
   const tabComponent = useMemo(() => {
     if (currentTab === NoteListPageTabEnum.Note) {
-      return <NoteTabComponent noteComponents={generatedComponent} />;
+      return <NoteListTabComponent noteComponents={generatedComponent} />;
     }
-    return <TagTabComponent tagComponents={generatedTags} />;
+    return <TagListTabComponent tagComponents={generatedTags} />;
   }, [currentTab, generatedComponent, generatedTags]);
 
   return (
