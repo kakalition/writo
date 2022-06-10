@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import NoteListPage from './features/app/note-list/NoteListPage';
+import AppPage from './features/app/AppPage';
 import HomePage from './features/homepage/HomePage';
 import LoginPage from './features/login/LoginPage';
 import RegisterPage from './features/register/RegisterPage';
@@ -29,7 +29,7 @@ ReactDOM.createRoot(document.getElementById('root') as Element).render(
         <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/app" element={<NoteListPage />} />
+        <Route path="/app" element={<AppPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
