@@ -3,18 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Note;
+use App\Services\NoteService;
+use App\Services\ServiceDataHolder;
+use App\Services\ServiceDataStatus;
 use Illuminate\Http\Request;
 
 class NoteController extends Controller
 {
-  public function index()
-  {
-    $collection = Note::all();
-    foreach ($collection as $item) {
-      $item->tags;
-    }
+  private $service;
 
-    return response(json_encode($collection));
+  public function __construct()
+  {
+    $this->service = new NoteService();
+  }
+
+  public function index($user_id)
+  {
+    $result = $this
+      ->service
+      ->get_user_notes($user_id);
+
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 
   public function store(Request $request)
@@ -54,7 +66,8 @@ class NoteController extends Controller
     $note->delete();
   }
 
-  public function tags(Note $note) {
+  public function tags(Note $note)
+  {
     return response(json_encode($note->tags));
   }
 }
