@@ -17,8 +17,12 @@ class NoteController extends Controller
     $this->service = new NoteService();
   }
 
-  public function index($user_email)
+  public function index(Request $request, $user_email)
   {
+    if ($request->user() == null) {
+      return response('Unauthorized', 401);
+    }
+
     $this->authorize('viewAny', [Note::class, $user_email]);
 
     $result = $this->service
@@ -32,10 +36,14 @@ class NoteController extends Controller
 
   public function store(Request $request, $user_email)
   {
+    if ($request->user() == null) {
+      return response('Unauthorized', 401);
+    }
+
     $this->authorize('create', [Note::class, $user_email]);
 
-    $validated_data = $request->validate([
-      'title' => 'required|max:255',
+    $request->validate([
+      'title' => 'required|max:255|unique:notes,title',
       'body' => 'required',
     ]);
 
@@ -49,34 +57,64 @@ class NoteController extends Controller
     );
   }
 
-  public function show(Note $note)
+  public function show(Request $request, $user_email, $title)
   {
-    $note->tags;
-    return response(json_encode($note));
-  }
-
-  public function update(Request $request, Note $note)
-  {
-    if ($request->input('title') != null) {
-      $note->title = $request->input('title');
+    if ($request->user() == null) {
+      return response('Unauthorized', 401);
     }
 
-    if ($request->input('body') != null) {
-      $note->body = $request->input('body');
+    $this->authorize('view', [Note::class, $user_email]);
+
+    $result = $this->service
+      ->get_user_note($user_email, $title);
+
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
+  }
+
+  public function update(Request $request, $user_email, $title)
+  {
+    if ($request->user() == null) {
+      return response('Unauthorized', 401);
     }
 
-    $note->save();
+    $this->authorize('update', [Note::class, $user_email]);
 
-    return response(json_encode($note));
+    $request->validate([
+      'title' => 'max:255|unique:notes,title',
+    ]);
+
+
+    $result = $this->service
+      ->update_note($request, $user_email, $title);
+
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 
-  public function destroy(Note $note)
+  public function destroy(Request $request, $user_email, $title)
   {
-    $note->delete();
+    if ($request->user() == null) {
+      return response('Unauthorized', 401);
+    }
+
+    $this->authorize('delete', [Note::class, $user_email]);
+
+    $result = $this->service
+      ->delete_note($user_email, $title);
+
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 
-  public function tags(Note $note)
+  /*   public function tags(Note $note)
   {
     return response(json_encode($note->tags));
-  }
+  } */
 }
