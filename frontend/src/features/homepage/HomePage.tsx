@@ -27,11 +27,9 @@ export default function HomePage() {
       <div id="main-content-container" className="flex flex-col justify-center items-center w-full h-full">
         <div id="main-content" className="flex flex-row justify-between items-center w-full h-full">
           <div id="content" className="flex flex-col justify-center items-start w-1/2">
-            <h2 className="text-8xl text-white font-libre-baskerville">
+            <h2 className="text-8xl leading-tight text-white font-libre-baskerville">
               Taking note
-              <br />
               have never been
-              <br />
               this fun.
             </h2>
             <div className="h-16" />
