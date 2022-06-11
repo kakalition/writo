@@ -14,6 +14,15 @@ class NoteService
   private $helper_validator;
   private $validator;
 
+  private function find_user_id($user_email)
+  {
+    $user_id = User::where('email', $user_email)
+      ->first()
+      ->id;
+
+    return $user_id;
+  }
+
   public function __construct()
   {
     $this->helper_validator = new HelperValidator();
@@ -36,8 +45,10 @@ class NoteService
     return new ServiceDataHolder($notes, 200);
   }
 
-  public function create_note(Request $request, $user_id)
+  public function create_note(Request $request, $user_email)
   {
+    $user_id = $this->find_user_id($user_email);
+
     $note = Note::create([
       'user_id' => $user_id,
       'title' => $request->input('title'),
