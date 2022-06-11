@@ -4,16 +4,10 @@ namespace App\Services;
 
 use App\Models\Note;
 use App\Models\User;
-use App\Validators\ValidatorDataStatus;
-use App\Validators\HelperValidator;
-use App\Validators\NoteValidator;
 use Illuminate\Http\Request;
 
 class NoteService
 {
-  private $helper_validator;
-  private $validator;
-
   private function find_user_id($user_email)
   {
     $user_id = User::where('email', $user_email)
@@ -23,21 +17,8 @@ class NoteService
     return $user_id;
   }
 
-  public function __construct()
-  {
-    $this->helper_validator = new HelperValidator();
-    $this->validator = new NoteValidator();
-  }
-
   public function get_user_notes($user_email)
   {
-    $user_validation = $this->helper_validator
-      ->validate_user_availability($user_email);
-
-    if ($user_validation->get_status() == ValidatorDataStatus::Failed) {
-      return new ServiceDataHolder($user_validation->get_message(), 404);
-    }
-
     $user_id = $this->find_user_id($user_email);
     $notes = Note::where('user_id', $user_id)
       ->get();
@@ -82,7 +63,7 @@ class NoteService
     $note = Note::where('user_id', $user_id)
       ->where('title', $formatted_title)
       ->first();
-      
+
     if ($note == null) {
       return new ServiceDataHolder('Note not found.', 404);
     }

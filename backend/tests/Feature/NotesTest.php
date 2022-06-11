@@ -6,8 +6,6 @@ use Illuminate\Testing\Fluent\AssertableJson;
 use function Pest\Laravel\deleteJson;
 use function Pest\Laravel\getJson;
 use function Pest\Laravel\patchJson;
-use function Pest\Laravel\putJson;
-use function PHPSTORM_META\map;
 
 uses(RefreshDatabase::class);
 
@@ -158,12 +156,15 @@ test('should return 200 and correct data when successfully update note.', functi
   register_user('Kaka', 'k@k');
   create_note_on_user_email('k@k', 'Test Title', 'Test Body');
 
-  $response = patchJson('api/users/k@k/notes/test-title', ['title' => 'Updated Title']);
+  $response = patchJson('api/users/k@k/notes/test-title', 
+  ['title' => 'Updated Title', 'body' => 'Updated Body']
+);
   $response->assertOk();
   $response->assertJson(
     fn (AssertableJson $json) =>
     $json
       ->where('title', 'Updated Title')
+      ->where('body', 'Updated Body')
       ->etc()
   );
 });

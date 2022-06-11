@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Note;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -33,15 +32,5 @@ class NotePolicy
   public function delete(User $user, $user_email)
   {
     return $user->email == $user_email;
-  }
-
-  public function restore(User $user, Note $note)
-  {
-    //
-  }
-
-  public function forceDelete(User $user, Note $note)
-  {
-    //
   }
 }

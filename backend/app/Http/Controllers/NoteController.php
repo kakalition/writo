@@ -112,9 +112,4 @@ class NoteController extends Controller
       $result->get_status_code()
     );
   }
-
-  /*   public function tags(Note $note)
-  {
-    return response(json_encode($note->tags));
-  } */
 }
