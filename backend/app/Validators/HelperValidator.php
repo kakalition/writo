@@ -6,9 +6,9 @@ use App\Models\User;
 
 class HelperValidator
 {
-  public function validate_user_availability($user_id)
+  public function validate_user_availability($user_email)
   {
-    $user = User::where('id', $user_id)->first();
+    $user = User::where('email', $user_email)->first();
 
     if ($user != null) {
       return new ValidatorDataHolder(ValidatorDataStatus::Success);

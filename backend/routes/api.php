@@ -25,6 +25,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResources([
-  'users/{user}/tags' => TagController::class,
-  'users/{user}/notes' => NoteController::class,
+  'users/{user_email}/tags' => TagController::class,
+  'users/{user_email}/notes' => NoteController::class,
 ]);

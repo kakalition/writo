@@ -17,11 +17,12 @@ class NoteController extends Controller
     $this->service = new NoteService();
   }
 
-  public function index($user_id)
+  public function index($user_email)
   {
-    $result = $this
-      ->service
-      ->get_user_notes($user_id);
+    $this->authorize('viewAny', [Note::class, $user_email]);
+
+    $result = $this->service
+      ->get_user_notes($user_email);
 
     return response(
       $result->get_data(),
@@ -29,15 +30,23 @@ class NoteController extends Controller
     );
   }
 
-  public function store(Request $request)
+  public function store(Request $request, $user_email)
   {
-    $note = Note::create([
-      'user_id' => $request->input('user_id'),
-      'title' => $request->input('title'),
-      'body' => $request->input('body'),
+    $this->authorize('create', [Note::class, $user_email]);
+
+    $validated_data = $request->validate([
+      'title' => 'required|max:255',
+      'body' => 'required',
     ]);
 
-    return response($note);
+    $result = $this
+      ->service
+      ->create_note($request, $user_email);
+
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 
   public function show(Note $note)
