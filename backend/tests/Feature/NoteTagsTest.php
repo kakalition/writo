@@ -78,5 +78,5 @@ test('should return 204 when successfully delete note tag.', function () {
     'tag_name' => 'Test Tag',
   ]);
 
-  $request->assertNotFound();
+  $request->assertNoContent();
 });

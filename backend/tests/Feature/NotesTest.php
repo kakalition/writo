@@ -9,41 +9,6 @@ use function Pest\Laravel\patchJson;
 
 uses(RefreshDatabase::class);
 
-/*****************
- * Read All Test *
- *****************/
-
-test('should return 401 when get notes on unauthenticated user.', function () {
-  $response = getJson('/api/users/k@k/notes');
-  $response->assertUnauthorized();
-});
-
-test('should return 403 when get notes of other user.', function () {
-  register_user('Kaka', 'k@k');
-  logout();
-  register_user('Jojo', 'j@j');
-
-  $response = getJson('/api/users/k@k/notes');
-  $response->assertForbidden();
-});
-
-test('should return 200 when successfully get notes (empty).', function () {
-  register_user('Kaka', 'k@k');
-
-  $response = getJson('/api/users/k@k/notes');
-  $response->assertOk();
-  $response->assertJson([]);
-});
-
-test('should return 200 when successfully get notes (with content).', function () {
-  register_user('Kaka', 'k@k');
-  create_note_on_user_email('k@k', 'Title', 'Body');
-
-  $response = getJson('/api/users/k@k/notes');
-  $response->assertOk();
-  $response->assertJsonCount(1);
-});
-
 /***************
  * Create Test *
  ***************/
@@ -84,6 +49,56 @@ test('should return 201 and correct data when successfully create note.', functi
     'title' => 'Title',
     'body' => 'Body',
   ]);
+});
+
+test('should return 201 and correct data when successfully create note with additional tag.', function () {
+  register_user('Kaka', 'k@k');
+
+  create_note_on_user_email('k@k', 'Title', 'Body');
+  create_tag_on_user_email('k@k', 'Tech', '#FFFFFF', '#000000');
+  create_note_tag_on_user_email('k@k', 'Title', 'Tech');
+
+  $response = getJson('api/users/k@k/notes/title');
+  $response->assertOk();
+  $response->assertJson([
+    'title' => 'Title',
+    'body' => 'Body',
+  ]);
+});
+
+/*****************
+ * Read All Test *
+ *****************/
+
+test('should return 401 when get notes on unauthenticated user.', function () {
+  $response = getJson('/api/users/k@k/notes');
+  $response->assertUnauthorized();
+});
+
+test('should return 403 when get notes of other user.', function () {
+  register_user('Kaka', 'k@k');
+  logout();
+  register_user('Jojo', 'j@j');
+
+  $response = getJson('/api/users/k@k/notes');
+  $response->assertForbidden();
+});
+
+test('should return 200 when successfully get notes (empty).', function () {
+  register_user('Kaka', 'k@k');
+
+  $response = getJson('/api/users/k@k/notes');
+  $response->assertOk();
+  $response->assertJson([]);
+});
+
+test('should return 200 when successfully get notes (with content).', function () {
+  register_user('Kaka', 'k@k');
+  create_note_on_user_email('k@k', 'Title', 'Body');
+
+  $response = getJson('/api/users/k@k/notes');
+  $response->assertOk();
+  $response->assertJsonCount(1);
 });
 
 /*************
