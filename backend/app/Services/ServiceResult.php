@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class ServiceDataHolder
+class ServiceResult
 {
   private $status_code;
   private $data;
