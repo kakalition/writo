@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateNoteTagRequest;
+use App\Http\Requests\DeleteNoteTagRequest;
+use App\Http\Requests\GetNoteTagRequest;
 use App\Models\NoteTag;
 use App\Services\IEntityService;
 use Illuminate\Http\Request;
@@ -15,28 +18,40 @@ class NoteTagController extends Controller
     $this->service = $service;
   }
 
-  public function index()
+  public function index($user_email)
   {
-    return response(json_encode(NoteTag::all()));
+    return null;
   }
 
-  public function store(Request $request)
+  public function store(CreateNoteTagRequest $request, $user_email)
   {
-    $notetag = NoteTag::create([
-      'note_id' => $request->input('note_id'),
-      'tag_id' => $request->input('tag_id'),
-    ]);
+    $result = $this->service
+      ->create_entity($request, $user_email);
 
-    return response(json_encode($notetag));
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 
   public function show(NoteTag $notetag)
   {
-    return response(json_encode($notetag));
+    return null;
   }
 
-  public function destroy(NoteTag $notetag)
+  public function update(NoteTag $notetag)
   {
-    return response(json_encode($notetag->delete()));
+    return null;
+  }
+
+  public function destroy(DeleteNoteTagRequest $request)
+  {
+    $result = $this->service
+      ->delete_entity($request);
+
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 }

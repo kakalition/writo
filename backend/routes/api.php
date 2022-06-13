@@ -28,3 +28,6 @@ Route::apiResources([
   'users/{user_email}/tags' => TagController::class,
   'users/{user_email}/notes' => NoteController::class,
 ]);
+
+Route::post('users/{user_email}/note-tags', [NoteTagController::class, 'store']);
+Route::delete('users/{user_email}/note-tags', [NoteTagController::class, 'destroy']);

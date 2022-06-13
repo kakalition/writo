@@ -53,6 +53,16 @@ function register_user($name, $email)
   return $response;
 }
 
+function login_user($email, $password)
+{
+  $response = postJson('/login', [
+    'email' => $email,
+    'password' => $password,
+  ]);
+
+  return $response;
+}
+
 function logout()
 {
   postJson('/logout');
@@ -79,6 +89,19 @@ function create_tag_on_user_email($user_email, $name, $background_color, $text_c
       'name' => $name,
       'background_color' => $background_color,
       'text_color' => $text_color,
+    ]
+  );
+
+  return $response;
+}
+
+function create_note_tag_on_user_email($user_email, $note_title, $tag_name)
+{
+  $response = postJson(
+    'api/users/' . $user_email . '/note-tags',
+    [
+      'note_title' => $note_title,
+      'tag_name' => $tag_name
     ]
   );
 
