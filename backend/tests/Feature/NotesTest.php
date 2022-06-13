@@ -218,3 +218,29 @@ test('should return 204 when successfully delete note.', function () {
   $response = deleteJson('api/users/k@k/notes/title');
   $response->assertNoContent();
 });
+
+/* Resource Test */
+test('should return correct JSON structure.', function () {
+  register_user('Kaka', 'k@k');
+  create_note_on_user_email('k@k', 'Title', 'Body');
+  create_tag_on_user_email('k@k', 'Test Tag', '#FFFFFF', '#000000');
+  create_tag_on_user_email('k@k', 'Tech', '#FFFFFF', '#000000');
+  create_note_tag_on_user_email('k@k', 'Title', 'Test Tag');
+  create_note_tag_on_user_email('k@k', 'Title', 'Tech');
+
+  $response = getJson('api/users/k@k/notes/title');
+  $response->assertJsonStructure([
+    'id',
+    'title',
+    'body',
+    'tags' => [
+      '*' => [
+        'id',
+        'name',
+        'background_color',
+        'text_color'
+      ]
+    ],
+    'created_at'
+  ]);
+});

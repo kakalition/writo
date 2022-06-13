@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Resources\NoteResource;
 use App\Models\Note;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class NoteService
       return new ServiceDataHolder('Note not found.', 404);
     }
 
-    return new ServiceDataHolder($note, 200);
+    return new ServiceDataHolder(new NoteResource($note), 200);
   }
 
   public function create_note(Request $request, $user_email)
