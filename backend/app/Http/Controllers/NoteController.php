@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateNoteRequest;
+use App\Http\Requests\ReadDeleteNoteRequest;
+use App\Http\Requests\ReadNoteRequest;
+use App\Http\Requests\UpdateNoteRequest;
 use App\Models\Note;
 use App\Services\IEntityService;
-use App\Services\NoteService;
 use Illuminate\Http\Request;
 
 class NoteController extends Controller
@@ -16,14 +19,8 @@ class NoteController extends Controller
     $this->service = $service;
   }
 
-  public function index(Request $request, $user_email)
+  public function index(ReadDeleteNoteRequest $request)
   {
-    if ($request->user() == null) {
-      return response('Unauthorized', 401);
-    }
-
-    $this->authorize('viewAny', [Note::class, $user_email]);
-
     $result = $this->service
       ->read_entities($request);
 
@@ -33,19 +30,8 @@ class NoteController extends Controller
     );
   }
 
-  public function store(Request $request, $user_email)
+  public function store(CreateNoteRequest $request)
   {
-    if ($request->user() == null) {
-      return response('Unauthorized', 401);
-    }
-
-    $this->authorize('create', [Note::class, $user_email]);
-
-    $request->validate([
-      'title' => 'required|max:255|unique:notes,title',
-      'body' => 'required',
-    ]);
-
     $result = $this
       ->service
       ->create_entity($request);
@@ -56,14 +42,8 @@ class NoteController extends Controller
     );
   }
 
-  public function show(Request $request, $user_email, $title)
+  public function show(ReadDeleteNoteRequest $request)
   {
-    if ($request->user() == null) {
-      return response('Unauthorized', 401);
-    }
-
-    $this->authorize('view', [Note::class, $user_email]);
-
     $result = $this->service
       ->read_entity($request);
 
@@ -73,19 +53,8 @@ class NoteController extends Controller
     );
   }
 
-  public function update(Request $request, $user_email, $title)
+  public function update(UpdateNoteRequest $request)
   {
-    if ($request->user() == null) {
-      return response('Unauthorized', 401);
-    }
-
-    $this->authorize('update', [Note::class, $user_email]);
-
-    $request->validate([
-      'title' => 'max:255|unique:notes,title',
-    ]);
-
-
     $result = $this->service
       ->update_entity($request);
 
@@ -95,14 +64,8 @@ class NoteController extends Controller
     );
   }
 
-  public function destroy(Request $request, $user_email, $title)
+  public function destroy(ReadDeleteNoteRequest $request)
   {
-    if ($request->user() == null) {
-      return response('Unauthorized', 401);
-    }
-
-    $this->authorize('delete', [Note::class, $user_email]);
-
     $result = $this->service
       ->delete_entity($request);
 

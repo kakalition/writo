@@ -35,12 +35,12 @@ class NotePolicy
   }
 
 
-  public function restore(User $user, Tag $tag)
+  public function restore(User $user)
   {
     //
   }
 
-  public function forceDelete(User $user, Tag $tag)
+  public function forceDelete(User $user)
   {
     //
   }
