@@ -18,7 +18,7 @@ test('should return 401 when get notes on unauthenticated user.', function () {
   $response->assertUnauthorized();
 });
 
-test('should return 403 when get notes on other id.', function () {
+test('should return 403 when get notes of other user.', function () {
   register_user('Kaka', 'k@k');
   logout();
   register_user('Jojo', 'j@j');
@@ -27,7 +27,7 @@ test('should return 403 when get notes on other id.', function () {
   $response->assertForbidden();
 });
 
-test('should return 200 when get notes on owns id (empty).', function () {
+test('should return 200 when successfully get notes (empty).', function () {
   register_user('Kaka', 'k@k');
 
   $response = getJson('/api/users/k@k/notes');
@@ -35,7 +35,7 @@ test('should return 200 when get notes on owns id (empty).', function () {
   $response->assertJson([]);
 });
 
-test('should return 200 when get notes on owns id (with content).', function () {
+test('should return 200 when successfully get notes (with content).', function () {
   register_user('Kaka', 'k@k');
   create_note_on_user_email('k@k', 'Title', 'Body');
 
@@ -53,7 +53,7 @@ test('should return 401 when create note on unauthorized user.', function () {
   $response->assertUnauthorized();
 });
 
-test('should return 403 when create note on other id.', function () {
+test('should return 403 when create note for other user.', function () {
   register_user('Kaka', 'k@k');
   logout();
   register_user('Jojo', 'j@j');
@@ -75,7 +75,7 @@ test('should return 422 when create note with duplicate title.', function () {
   $response->assertUnprocessable();
 });
 
-test('should return 201 and correct data when create note with valid data.', function () {
+test('should return 201 and correct data when successfully create note.', function () {
   register_user('Kaka', 'k@k');
 
   $response = create_note_on_user_email('k@k', 'Title', 'Body');
@@ -95,7 +95,7 @@ test('should return 401 when get note on unauthenticated user.', function () {
   $response->assertUnauthorized();
 });
 
-test('should return 403 when get note on another user.', function () {
+test('should return 403 when get note of another user.', function () {
   register_user('Kaka', 'k@k');
   create_note_on_user_email('k@k', 'Title', 'Body');
   logout();
@@ -105,13 +105,13 @@ test('should return 403 when get note on another user.', function () {
   $response->assertForbidden();
 });
 
-test('should return 404 when get note on unrecognized title.', function () {
+test('should return 404 when get unrecognized note.', function () {
   register_user('Kaka', 'k@k');
   $response = getJson('api/users/k@k/notes/title-at');
   $response->assertNotFound();
 });
 
-test('should return 200 and correct data when get note on authorized user.', function () {
+test('should return 200 with correct data when successfully get note.', function () {
   register_user('Kaka', 'k@k');
   create_note_on_user_email('k@k', 'Title At', 'Body');
 
@@ -156,9 +156,10 @@ test('should return 200 and correct data when successfully update note.', functi
   register_user('Kaka', 'k@k');
   create_note_on_user_email('k@k', 'Test Title', 'Test Body');
 
-  $response = patchJson('api/users/k@k/notes/test-title', 
-  ['title' => 'Updated Title', 'body' => 'Updated Body']
-);
+  $response = patchJson(
+    'api/users/k@k/notes/test-title',
+    ['title' => 'Updated Title', 'body' => 'Updated Body']
+  );
   $response->assertOk();
   $response->assertJson(
     fn (AssertableJson $json) =>
@@ -178,7 +179,7 @@ test('should return 401 when delete note on unauthenticated user.', function () 
   $response->assertUnauthorized();
 });
 
-test('should return 403 when delete note on other user.', function () {
+test('should return 403 when delete note of another user.', function () {
   register_user('Kaka', 'k@k');
   create_note_on_user_email('k@k', 'Title', 'Body');
   logout();
@@ -195,7 +196,7 @@ test('should return 404 when delete unrecognized note.', function () {
   $response->assertNotFound();
 });
 
-test('should return 204 when delete valid note.', function () {
+test('should return 204 when successfully delete note.', function () {
   register_user('Kaka', 'k@k');
   create_note_on_user_email('k@k', 'Title', 'Body');
 

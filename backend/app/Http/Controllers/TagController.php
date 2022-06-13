@@ -3,60 +3,109 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
+use App\Models\User;
+use App\Services\TagService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class TagController extends Controller
 {
-  public function index()
+  private $service;
+
+  public function __construct()
   {
-    $collection = Tag::all();
-    return response(json_encode($collection));
+    $this->service = new TagService();
   }
 
-  public function store(Request $request)
+  public function index(Request $request, $user_email)
   {
-    $tag = Tag::create([
-      'user_id' => $request->input('user_id'),
-      'name' => $request->input('name'),
-      'background_color' => $request->input('background_color'),
-      'text_color' => $request->input('text_color'),
-    ]);
-
-    return response($tag, 200);
-  }
-
-  public function show(Tag $tag)
-  {
-    return response(json_encode(response($tag)));
-  }
-
-  public function update(Request $request, Tag $tag)
-  {
-    if ($request->input('name') != null) {
-      $tag->name = $request->input('name');
+    if ($request->user() == null) {
+      return response('Unauthorized', 401);
     }
 
-    if ($request->input('background_color') != null) {
-      $tag->background_color = $request->input('background_color');
-    }
+    $this->authorize('viewAny', [Tag::class, $user_email]);
 
-    if ($request->input('text_color') != null) {
-      $tag->text_color = $request->input('text_color');
-    }
+    $result = $this->service
+      ->get_tags($user_email);
 
-    $tag->save();
-
-    return response(json_encode($tag));
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 
-  public function destroy(Tag $tag)
+  public function store(Request $request, $user_email)
   {
-    $status = $tag->delete();
-    return response($status);
+    if ($request->user() == null) {
+      return response('Unauthorized', 401);
+    }
+
+    $this->authorize('create', [Tag::class, $user_email]);
+
+    $result = $this->service
+      ->create_tag($request, $user_email);
+
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 
-  public function notes(Tag $tag)
+  public function show(Request $request, $user_email, $name)
   {
-    return response(json_encode($tag->notes));
+    if ($request->user() == null) {
+      return response('Unauthorized', 401);
+    }
+
+    $this->authorize('view', [Tag::class, $user_email]);
+
+    $result = $this->service
+      ->get_tag($user_email, $name);
+
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
+  }
+
+  public function update(Request $request, $user_email, $name)
+  {
+    if ($request->user() == null) {
+      return response('Unauthorized', 401);
+    }
+
+    $this->authorize('update', [Tag::class, $user_email]);
+
+    $result = $this->service
+      ->update_tag($request, $user_email, $name);
+
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
+  }
+
+  public function destroy(Request $request, $user_email, $name)
+  {
+    if ($request->user() == null) {
+      return response('Unauthorized', 401);
+    }
+
+    $this->authorize('delete', [Tag::class, $user_email]);
+
+    $result = $this->service
+      ->delete_tag($user_email, $name);
+
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
+  }
+
+  public function notes(Request $request, $user_email)
+  {
+    if ($request->user() == null) {
+      return response('Unauthorized', 401);
+    }
   }
 }

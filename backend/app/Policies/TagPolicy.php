@@ -2,10 +2,11 @@
 
 namespace App\Policies;
 
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class NotePolicy
+class TagPolicy
 {
   use HandlesAuthorization;
 
@@ -33,7 +34,6 @@ class NotePolicy
   {
     return $user->email == $user_email;
   }
-
 
   public function restore(User $user, Tag $tag)
   {

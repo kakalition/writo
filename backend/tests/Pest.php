@@ -70,3 +70,17 @@ function create_note_on_user_email($user_email, $title, $body)
 
   return $response;
 }
+
+function create_tag_on_user_email($user_email, $name, $background_color, $text_color)
+{
+  $response = postJson(
+    'api/users/' . $user_email . '/tags',
+    [
+      'name' => $name,
+      'background_color' => $background_color,
+      'text_color' => $text_color,
+    ]
+  );
+
+  return $response;
+}
