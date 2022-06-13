@@ -26,8 +26,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResources([
   'users/{user_email}/tags' => TagController::class,
-  'users/{user_email}/notes' => NoteController::class,
 ]);
+
+Route::apiResource('users/{user_email}/notes', NoteController::class)
+  ->parameters(['notes' => 'title']);
 
 Route::post('users/{user_email}/note-tags', [NoteTagController::class, 'store']);
 Route::delete('users/{user_email}/note-tags', [NoteTagController::class, 'destroy']);

@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\NoteTagController;
 use App\Services\IEntityService;
+use App\Services\NoteService;
 use App\Services\NoteTagService;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +23,13 @@ class AppServiceProvider extends ServiceProvider
       ->needs(IEntityService::class)
       ->give(function () {
         return new NoteTagService;
+      });
+
+    $this->app
+      ->when(NoteController::class)
+      ->needs(IEntityService::class)
+      ->give(function () {
+        return new NoteService;
       });
   }
 

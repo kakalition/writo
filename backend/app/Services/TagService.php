@@ -33,7 +33,7 @@ class TagService
     $tags = Tag::where('user_id', $user_id)
       ->get();
 
-    return new ServiceDataHolder($tags, 200);
+    return new ServiceResult($tags, 200);
   }
 
   public function create_tag(Request $request, $user_email)
@@ -64,7 +64,7 @@ class TagService
       'text_color' => $request->input('text_color'),
     ]);
 
-    return new ServiceDataHolder($tag, 201);
+    return new ServiceResult($tag, 201);
   }
 
   public function get_tag($user_email, $name)
@@ -75,10 +75,10 @@ class TagService
     $tag = $this->find_tag($user_id, $formatted_name);
 
     if ($tag == null) {
-      return new ServiceDataHolder('Tag not found.', 404);
+      return new ServiceResult('Tag not found.', 404);
     }
 
-    return new ServiceDataHolder($tag, 200);
+    return new ServiceResult($tag, 200);
   }
 
   public function delete_tag($user_email, $name)
@@ -89,10 +89,10 @@ class TagService
     $tag = $this->find_tag($user_id, $formatted_name);
 
     if ($tag == null) {
-      return new ServiceDataHolder('Tag not found.', 404);
+      return new ServiceResult('Tag not found.', 404);
     }
 
-    return new ServiceDataHolder('', 204);
+    return new ServiceResult('', 204);
   }
 
   public function update_tag(Request $request, $user_email, $name)
@@ -106,7 +106,7 @@ class TagService
     $text_color_input = $request->input('text_color');
 
     if ($tag == null) {
-      return new ServiceDataHolder('Tag not found.', 404);
+      return new ServiceResult('Tag not found.', 404);
     }
 
     if ($name_input != null) {
@@ -122,6 +122,6 @@ class TagService
     }
 
     $tag->save();
-    return new ServiceDataHolder($tag, 200);
+    return new ServiceResult($tag, 200);
   }
 }

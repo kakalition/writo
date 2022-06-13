@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Note;
+use App\Services\IEntityService;
 use App\Services\NoteService;
 use Illuminate\Http\Request;
 
@@ -10,9 +11,9 @@ class NoteController extends Controller
 {
   private $service;
 
-  public function __construct()
+  public function __construct(IEntityService $service)
   {
-    $this->service = new NoteService();
+    $this->service = $service;
   }
 
   public function index(Request $request, $user_email)
@@ -24,7 +25,7 @@ class NoteController extends Controller
     $this->authorize('viewAny', [Note::class, $user_email]);
 
     $result = $this->service
-      ->get_user_notes($user_email);
+      ->read_entities($request);
 
     return response(
       $result->get_data(),
@@ -47,7 +48,7 @@ class NoteController extends Controller
 
     $result = $this
       ->service
-      ->create_note($request, $user_email);
+      ->create_entity($request);
 
     return response(
       $result->get_data(),
@@ -64,7 +65,7 @@ class NoteController extends Controller
     $this->authorize('view', [Note::class, $user_email]);
 
     $result = $this->service
-      ->get_user_note($user_email, $title);
+      ->read_entity($request);
 
     return response(
       $result->get_data(),
@@ -86,7 +87,7 @@ class NoteController extends Controller
 
 
     $result = $this->service
-      ->update_note($request, $user_email, $title);
+      ->update_entity($request);
 
     return response(
       $result->get_data(),
@@ -103,7 +104,7 @@ class NoteController extends Controller
     $this->authorize('delete', [Note::class, $user_email]);
 
     $result = $this->service
-      ->delete_note($user_email, $title);
+      ->delete_entity($request);
 
     return response(
       $result->get_data(),

@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateNoteTagRequest;
 use App\Http\Requests\DeleteNoteTagRequest;
-use App\Http\Requests\GetNoteTagRequest;
-use App\Models\NoteTag;
 use App\Services\IEntityService;
-use Illuminate\Http\Request;
 
 class NoteTagController extends Controller
 {
@@ -34,12 +31,12 @@ class NoteTagController extends Controller
     );
   }
 
-  public function show(NoteTag $notetag)
+  public function show()
   {
     return null;
   }
 
-  public function update(NoteTag $notetag)
+  public function update()
   {
     return null;
   }
