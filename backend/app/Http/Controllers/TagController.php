@@ -102,10 +102,10 @@ class TagController extends Controller
     );
   }
 
-  public function notes(Request $request, $user_email)
+/*   public function notes(Request $request, $user_email)
   {
     if ($request->user() == null) {
       return response('Unauthorized', 401);
     }
-  }
+  } */
 }

@@ -123,14 +123,14 @@ test('should return 403 when get tag of other user.', function () {
 
   register_user('Jojo', 'j@j');
 
-  $response = getJson('api/users/k@k/notes/test-tag');
+  $response = getJson('api/users/k@k/tags/test-tag');
   $response->assertForbidden();
 });
 
 test('should return 404 when get unrecognized tag.', function () {
   register_user('Kaka', 'k@k');
 
-  $response = getJson('api/users/k@k/notes/test-tag');
+  $response = getJson('api/users/k@k/tags/test-tag');
   $response->assertNotFound();
 });
 
