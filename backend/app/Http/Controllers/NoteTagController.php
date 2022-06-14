@@ -15,11 +15,6 @@ class NoteTagController extends Controller
     $this->service = $service;
   }
 
-  public function index($user_email)
-  {
-    return null;
-  }
-
   public function store(CreateNoteTagRequest $request, $user_email)
   {
     $result = $this->service
@@ -29,16 +24,6 @@ class NoteTagController extends Controller
       $result->get_data(),
       $result->get_status_code()
     );
-  }
-
-  public function show()
-  {
-    return null;
-  }
-
-  public function update()
-  {
-    return null;
   }
 
   public function destroy(DeleteNoteTagRequest $request)
