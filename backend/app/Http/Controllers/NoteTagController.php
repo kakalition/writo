@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateNoteTagRequest;
-use App\Http\Requests\DeleteNoteTagRequest;
+use App\Http\Requests\ReadDeleteRequest;
 use App\Services\IEntityService;
 
 class NoteTagController extends Controller
@@ -26,7 +26,7 @@ class NoteTagController extends Controller
     );
   }
 
-  public function destroy(DeleteNoteTagRequest $request)
+  public function destroy(ReadDeleteRequest $request)
   {
     $result = $this->service
       ->delete_entity($request);
