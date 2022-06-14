@@ -2,31 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
-use App\Models\User;
-use App\Services\TagService;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use App\Http\Requests\CreateTagRequest;
+use App\Http\Requests\ReadDeleteRequest;
+use App\Http\Requests\UpdateTagRequest;
+use App\Services\IEntityService;
 
 class TagController extends Controller
 {
   private $service;
 
-  public function __construct()
+  public function __construct(IEntityService $service)
   {
-    $this->service = new TagService();
+    $this->service = $service;
   }
 
-  public function index(Request $request, $user_email)
+  public function index(ReadDeleteRequest $request)
   {
-    if ($request->user() == null) {
-      return response('Unauthorized', 401);
-    }
-
-    $this->authorize('viewAny', [Tag::class, $user_email]);
-
     $result = $this->service
-      ->get_tags($user_email);
+      ->read_entities($request);
 
     return response(
       $result->get_data(),
@@ -34,16 +27,10 @@ class TagController extends Controller
     );
   }
 
-  public function store(Request $request, $user_email)
+  public function store(CreateTagRequest $request)
   {
-    if ($request->user() == null) {
-      return response('Unauthorized', 401);
-    }
-
-    $this->authorize('create', [Tag::class, $user_email]);
-
     $result = $this->service
-      ->create_tag($request, $user_email);
+      ->create_entity($request);
 
     return response(
       $result->get_data(),
@@ -51,16 +38,10 @@ class TagController extends Controller
     );
   }
 
-  public function show(Request $request, $user_email, $name)
+  public function show(ReadDeleteRequest $request)
   {
-    if ($request->user() == null) {
-      return response('Unauthorized', 401);
-    }
-
-    $this->authorize('view', [Tag::class, $user_email]);
-
     $result = $this->service
-      ->get_tag($user_email, $name);
+      ->read_entity($request);
 
     return response(
       $result->get_data(),
@@ -68,16 +49,10 @@ class TagController extends Controller
     );
   }
 
-  public function update(Request $request, $user_email, $name)
+  public function update(UpdateTagRequest $request)
   {
-    if ($request->user() == null) {
-      return response('Unauthorized', 401);
-    }
-
-    $this->authorize('update', [Tag::class, $user_email]);
-
     $result = $this->service
-      ->update_tag($request, $user_email, $name);
+      ->update_entity($request);
 
     return response(
       $result->get_data(),
@@ -85,27 +60,14 @@ class TagController extends Controller
     );
   }
 
-  public function destroy(Request $request, $user_email, $name)
+  public function destroy(ReadDeleteRequest $request)
   {
-    if ($request->user() == null) {
-      return response('Unauthorized', 401);
-    }
-
-    $this->authorize('delete', [Tag::class, $user_email]);
-
     $result = $this->service
-      ->delete_tag($user_email, $name);
+      ->delete_entity($request);
 
     return response(
       $result->get_data(),
       $result->get_status_code()
     );
   }
-
-/*   public function notes(Request $request, $user_email)
-  {
-    if ($request->user() == null) {
-      return response('Unauthorized', 401);
-    }
-  } */
 }

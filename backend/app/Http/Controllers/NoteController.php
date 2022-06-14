@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateNoteRequest;
-use App\Http\Requests\ReadDeleteNoteRequest;
-use App\Http\Requests\ReadNoteRequest;
+use App\Http\Requests\ReadDeleteRequest;
 use App\Http\Requests\UpdateNoteRequest;
-use App\Models\Note;
 use App\Services\IEntityService;
-use Illuminate\Http\Request;
 
 class NoteController extends Controller
 {
@@ -19,7 +16,7 @@ class NoteController extends Controller
     $this->service = $service;
   }
 
-  public function index(ReadDeleteNoteRequest $request)
+  public function index(ReadDeleteRequest $request)
   {
     $result = $this->service
       ->read_entities($request);
@@ -42,7 +39,7 @@ class NoteController extends Controller
     );
   }
 
-  public function show(ReadDeleteNoteRequest $request)
+  public function show(ReadDeleteRequest $request)
   {
     $result = $this->service
       ->read_entity($request);
@@ -64,7 +61,7 @@ class NoteController extends Controller
     );
   }
 
-  public function destroy(ReadDeleteNoteRequest $request)
+  public function destroy(ReadDeleteRequest $request)
   {
     $result = $this->service
       ->delete_entity($request);

@@ -2,12 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\GetTagUniqueConstraintTrait;
 use App\Helpers\Throw401OnUnauthenticatedTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReadDeleteNoteRequest extends FormRequest
+class UpdateTagRequest extends FormRequest
 {
   use Throw401OnUnauthenticatedTrait;
+  use GetTagUniqueConstraintTrait;
 
   public function authorize()
   {
@@ -18,6 +20,14 @@ class ReadDeleteNoteRequest extends FormRequest
 
   public function rules()
   {
-    return [];
+    return [
+      'name' => [
+        'required',
+        'string',
+        $this->get_tag_unique_constraint()
+      ],
+      'background_color' => 'required|string|size:7',
+      'text_color' => 'required|string|size:7',
+    ];
   }
 }
