@@ -24,15 +24,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
   return $request->user();
 });
 
-Route::get('users/{user}/notes', [UserController::class, 'notes']);
-Route::get('users/{user}/tags', [UserController::class, 'tags']);
+Route::apiResource('users/{user_email}/tags', TagController::class)
+  ->parameters(['tags' => 'name']);
 
-Route::apiResources([
-  'tags' => TagController::class,
-  'notes' => NoteController::class,
-]);
+Route::apiResource('users/{user_email}/notes', NoteController::class)
+  ->parameters(['notes' => 'title']);
 
-Route::get('tags/{tag}/notes', [TagController::class, 'notes']);
-Route::get('notes/{note}/tags', [NoteController::class, 'tags']);
-
-Route::apiResource('notetags', NoteTagController::class)->except('update');
+Route::post('users/{user_email}/note-tags', [NoteTagController::class, 'store']);
+Route::delete('users/{user_email}/note-tags', [NoteTagController::class, 'destroy']);

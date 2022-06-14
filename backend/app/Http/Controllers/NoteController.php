@@ -2,59 +2,73 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Note;
-use Illuminate\Http\Request;
+use App\Http\Requests\CreateNoteRequest;
+use App\Http\Requests\ReadDeleteRequest;
+use App\Http\Requests\UpdateNoteRequest;
+use App\Services\IEntityService;
 
 class NoteController extends Controller
 {
-  public function index()
-  {
-    $collection = Note::all();
-    foreach ($collection as $item) {
-      $item->tags;
-    }
+  private $service;
 
-    return response(json_encode($collection));
+  public function __construct(IEntityService $service)
+  {
+    $this->service = $service;
   }
 
-  public function store(Request $request)
+  public function index(ReadDeleteRequest $request)
   {
-    $note = Note::create([
-      'user_id' => $request->input('user_id'),
-      'title' => $request->input('title'),
-      'body' => $request->input('body'),
-    ]);
+    $result = $this->service
+      ->read_entities($request);
 
-    return response($note);
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 
-  public function show(Note $note)
+  public function store(CreateNoteRequest $request)
   {
-    $note->tags;
-    return response(json_encode($note));
+    $result = $this
+      ->service
+      ->create_entity($request);
+
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 
-  public function update(Request $request, Note $note)
+  public function show(ReadDeleteRequest $request)
   {
-    if ($request->input('title') != null) {
-      $note->title = $request->input('title');
-    }
+    $result = $this->service
+      ->read_entity($request);
 
-    if ($request->input('body') != null) {
-      $note->body = $request->input('body');
-    }
-
-    $note->save();
-
-    return response(json_encode($note));
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 
-  public function destroy(Note $note)
+  public function update(UpdateNoteRequest $request)
   {
-    $note->delete();
+    $result = $this->service
+      ->update_entity($request);
+
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 
-  public function tags(Note $note) {
-    return response(json_encode($note->tags));
+  public function destroy(ReadDeleteRequest $request)
+  {
+    $result = $this->service
+      ->delete_entity($request);
+
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 }

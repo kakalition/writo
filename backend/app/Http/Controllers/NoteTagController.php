@@ -2,56 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NoteTag;
-use Illuminate\Http\Request;
+use App\Http\Requests\CreateNoteTagRequest;
+use App\Http\Requests\ReadDeleteRequest;
+use App\Services\IEntityService;
 
 class NoteTagController extends Controller
 {
-  /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
-  public function index()
+  private $service;
+
+  public function __construct(IEntityService $service)
   {
-    return response(json_encode(NoteTag::all()));
+    $this->service = $service;
   }
 
-  /**
-   * Store a newly created resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\Response
-   */
-  public function store(Request $request)
+  public function store(CreateNoteTagRequest $request, $user_email)
   {
-    $notetag = NoteTag::create([
-      'note_id' => $request->input('note_id'),
-      'tag_id' => $request->input('tag_id'),
-    ]);
+    $result = $this->service
+      ->create_entity($request, $user_email);
 
-    return response(json_encode($notetag));
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 
-  /**
-   * Display the specified resource.
-   *
-   * @param  \App\Models\NoteTag  $noteTag
-   * @return \Illuminate\Http\Response
-   */
-  public function show(NoteTag $notetag)
+  public function destroy(ReadDeleteRequest $request)
   {
-    return response(json_encode($notetag));
-  }
+    $result = $this->service
+      ->delete_entity($request);
 
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  \App\Models\NoteTag  $noteTag
-   * @return \Illuminate\Http\Response
-   */
-  public function destroy(NoteTag $notetag)
-  {
-    return response(json_encode($notetag->delete()));
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 }

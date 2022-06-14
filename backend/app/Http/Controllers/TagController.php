@@ -2,61 +2,72 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
-use Illuminate\Http\Request;
+use App\Http\Requests\CreateTagRequest;
+use App\Http\Requests\ReadDeleteRequest;
+use App\Http\Requests\UpdateTagRequest;
+use App\Services\IEntityService;
 
 class TagController extends Controller
 {
-  public function index()
+  private $service;
+
+  public function __construct(IEntityService $service)
   {
-    $collection = Tag::all();
-    return response(json_encode($collection));
+    $this->service = $service;
   }
 
-  public function store(Request $request)
+  public function index(ReadDeleteRequest $request)
   {
-    $tag = Tag::create([
-      'user_id' => $request->input('user_id'),
-      'name' => $request->input('name'),
-      'background_color' => $request->input('background_color'),
-      'text_color' => $request->input('text_color'),
-    ]);
+    $result = $this->service
+      ->read_entities($request);
 
-    return response($tag, 200);
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 
-  public function show(Tag $tag)
+  public function store(CreateTagRequest $request)
   {
-    return response(json_encode(response($tag)));
+    $result = $this->service
+      ->create_entity($request);
+
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 
-  public function update(Request $request, Tag $tag)
+  public function show(ReadDeleteRequest $request)
   {
-    if ($request->input('name') != null) {
-      $tag->name = $request->input('name');
-    }
+    $result = $this->service
+      ->read_entity($request);
 
-    if ($request->input('background_color') != null) {
-      $tag->background_color = $request->input('background_color');
-    }
-
-    if ($request->input('text_color') != null) {
-      $tag->text_color = $request->input('text_color');
-    }
-
-    $tag->save();
-
-    return response(json_encode($tag));
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 
-  public function destroy(Tag $tag)
+  public function update(UpdateTagRequest $request)
   {
-    $status = $tag->delete();
-    return response($status);
+    $result = $this->service
+      ->update_entity($request);
+
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 
-  public function notes(Tag $tag)
+  public function destroy(ReadDeleteRequest $request)
   {
-    return response(json_encode($tag->notes));
+    $result = $this->service
+      ->delete_entity($request);
+
+    return response(
+      $result->get_data(),
+      $result->get_status_code()
+    );
   }
 }
