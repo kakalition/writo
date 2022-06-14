@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Helpers\FindTagTrait;
 use App\Helpers\FindUserIdTrait;
 use App\Models\Tag;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
 class TagService implements IEntityService
@@ -12,20 +13,21 @@ class TagService implements IEntityService
   use FindUserIdTrait;
   use FindTagTrait;
 
-  public function create_entity(Request $request): ServiceResult
+  public function create_entity(FormRequest $request): ServiceResult
   {
+    $validated = $request->validated();
     $user_id = $this->find_user_id($request->route('user_email'));
     $tag = Tag::create([
       'user_id' => $user_id,
-      'name' => $request->input('name'),
-      'background_color' => $request->input('background_color'),
-      'text_color' => $request->input('text_color'),
+      'name' => $validated['name'],
+      'background_color' => $validated['background_color'],
+      'text_color' => $validated['text_color'],
     ]);
 
     return new ServiceResult($tag, 201);
   }
 
-  public function read_entity(Request $request): ServiceResult
+  public function read_entity(FormRequest $request): ServiceResult
   {
     $user_id = $this->find_user_id($request->route('user_email'));
     $formatted_name = str_replace('-', ' ', $request->route('name'));
@@ -39,7 +41,7 @@ class TagService implements IEntityService
     return new ServiceResult($tag, 200);
   }
 
-  public function read_entities(Request $request): ServiceResult
+  public function read_entities(FormRequest $request): ServiceResult
   {
     $user_id = $this->find_user_id($request->route('user_email'));
     $tags = Tag::where('user_id', $user_id)
@@ -48,15 +50,16 @@ class TagService implements IEntityService
     return new ServiceResult($tags, 200);
   }
 
-  public function update_entity(Request $request): ServiceResult
+  public function update_entity(FormRequest $request): ServiceResult
   {
+    $validated = $request->validated();
     $user_id = $this->find_user_id($request->route('user_email'));
     $formatted_name = str_replace('-', ' ', $request->route('name'));
     $tag = $this->find_tag($user_id, $formatted_name);
 
-    $name_input = $request->input('name');
-    $background_color_input = $request->input('background_color');
-    $text_color_input = $request->input('text_color');
+    $name_input = $validated['name'];
+    $background_color_input = $validated['background_color'];
+    $text_color_input = $validated['text_color'];
 
     if ($tag == null) {
       return new ServiceResult('Tag not found.', 404);
@@ -78,7 +81,7 @@ class TagService implements IEntityService
     return new ServiceResult($tag, 200);
   }
 
-  public function delete_entity(Request $request): ServiceResult
+  public function delete_entity(FormRequest $request): ServiceResult
   {
     $user_id = $this->find_user_id($request->route('user_email'));
     $formatted_name = str_replace('-', ' ', $request->route('name'));

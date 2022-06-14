@@ -6,27 +6,28 @@ use App\Helpers\FindNoteTrait;
 use App\Helpers\FindUserIdTrait;
 use App\Http\Resources\NoteResource;
 use App\Models\Note;
-use Illuminate\Http\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
 class NoteService implements IEntityService
 {
   use FindUserIdTrait;
   use FindNoteTrait;
 
-  public function create_entity(Request $request): ServiceResult
+  public function create_entity(FormRequest $request): ServiceResult
   {
+    $validated = $request->validated();
     $user_id = $this->find_user_id($request->route('user_email'));
 
     $note = Note::create([
       'user_id' => $user_id,
-      'title' => $request->input('title'),
-      'body' => $request->input('body'),
+      'title' => $validated['title'],
+      'body' => $validated['body'],
     ]);
 
     return new ServiceResult($note, 201);
   }
 
-  public function read_entity(Request $request): ServiceResult
+  public function read_entity(FormRequest $request): ServiceResult
   {
     $user_id = $this->find_user_id($request->route('user_email'));
     $formatted_title = str_replace('-', ' ', $request->route('title'));
@@ -42,7 +43,7 @@ class NoteService implements IEntityService
     return new ServiceResult(new NoteResource($note), 200);
   }
 
-  public function read_entities(Request $request): ServiceResult
+  public function read_entities(FormRequest $request): ServiceResult
   {
     $user_id = $this->find_user_id($request->route('user_email'));
     $notes = Note::where('user_id', $user_id)
@@ -51,8 +52,9 @@ class NoteService implements IEntityService
     return new ServiceResult(NoteResource::collection($notes), 200);
   }
 
-  public function update_entity(Request $request): ServiceResult
+  public function update_entity(FormRequest $request): ServiceResult
   {
+    $validated = $request->validated();
     $user_id = $this->find_user_id($request->route('user_email'));
     $formatted_title = str_replace('-', ' ', $request->route('title'));
 
@@ -62,12 +64,12 @@ class NoteService implements IEntityService
       return new ServiceResult('Note not found.', 404);
     }
 
-    $title = $request->input('title');
+    $title = $validated['title'];
     if ($title != null) {
       $note->title = $title;
     }
 
-    $body = $request->input('body');
+    $body = $validated['body'];
     if ($body != null) {
       $note->body = $body;
     }
@@ -76,7 +78,7 @@ class NoteService implements IEntityService
     return new ServiceResult($note, 200);
   }
 
-  public function delete_entity(Request $request): ServiceResult
+  public function delete_entity(FormRequest $request): ServiceResult
   {
     $user_id = $this->find_user_id($request->route('user_email'));
     $formatted_title = str_replace('-', ' ', $request->route('title'));

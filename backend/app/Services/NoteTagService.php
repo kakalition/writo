@@ -2,22 +2,16 @@
 
 namespace App\Services;
 
+use App\Helpers\FindUserIdTrait;
 use App\Models\Note;
 use App\Models\NoteTag;
 use App\Models\Tag;
-use App\Models\User;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
 class NoteTagService implements IEntityService
 {
-  private function find_user_id($user_email)
-  {
-    $id = User::where('email', $user_email)
-      ->first()
-      ->id;
-
-    return $id;
-  }
+  use FindUserIdTrait;
 
   private function find_note_id($user_id, $title)
   {
@@ -39,12 +33,14 @@ class NoteTagService implements IEntityService
     return $tag;
   }
 
-  public function create_entity(Request $request): ServiceResult
+  public function create_entity(FormRequest $request): ServiceResult
   {
-    $title = $request->input('note_title');
+    $validated = $request->validated();
+
+    $title = $validated['note_title'];
     $formatted_title = str_replace('-', ' ', $title);
 
-    $tag_name = $request->input('tag_name');
+    $tag_name = $validated['tag_name'];
     $formatted_tag_name = str_replace('-', ' ', $tag_name);
 
     $user_id = $this->find_user_id($request->route('user_email'));
